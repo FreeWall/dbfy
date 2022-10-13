@@ -10,7 +10,7 @@ module.exports = {
       sm: { max: '639px' },
     },
     colors: {
-      'dbfy-text': '#506069',
+      'dbfy-text': '#3f4b53',
       'dbfy-dark-icon': '#6a7f8b',
       'dbfy-light-icon': '#9facb4',
       'dbfy-border': '#c6d2db',

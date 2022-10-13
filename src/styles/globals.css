@@ -1,7 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply text-dbfy-text text-[13px];
+  color: theme('colors.dbfy-text');
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+}
+
+.border-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-color: theme('colors.dbfy-border');
+  border-top-color: theme('colors.dbfy-dark-icon');
+  -webkit-animation: border-spinner-anim 0.8s linear infinite;
+  animation: border-spinner-anim 0.8s linear infinite;
+}
+
+@-webkit-keyframes border-spinner-anim {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes border-spinner-anim {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cm-editor.cm-focused {
+  outline: none !important;
+}
+
+.cm-editor .cm-scroller {
+  font-size: 12px;
 }

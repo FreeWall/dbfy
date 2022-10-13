@@ -9,11 +9,7 @@ function getStorageValue<S>(key: string, defaultValue: S): S {
   return defaultValue;
 }
 
-export function useLocalStorage<S>(
-  key: string,
-  defaultValue: S,
-  prefix = 'dbfy_',
-): [S, (value: S) => void] {
+export function useLocalStorage<S>(key: string, defaultValue: S, prefix = 'dbfy_'): [S, (value: S) => void] {
   const [value, setValue] = useState(defaultValue);
   key = prefix + key;
 
