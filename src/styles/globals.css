@@ -39,11 +39,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-.cm-editor.cm-focused {
-  outline: none !important;
-}
-
-.cm-editor .cm-scroller {
-  font-size: 12px;
-}
