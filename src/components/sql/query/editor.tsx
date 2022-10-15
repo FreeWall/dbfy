@@ -1,94 +1,70 @@
-import Prism, { prismClassMap } from './prism';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createEditor, Descendant, Text } from 'slate';
-import { Editable, Slate, withReact } from 'slate-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createEditor, Descendant, Editor, Transforms } from 'slate';
+import { withHistory } from 'slate-history';
+import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
 
-const getLength = (token) => {
-  if (typeof token === 'string') {
-    return token.length;
-  } else if (typeof token.content === 'string') {
-    return token.content.length;
-  } else {
-    return token.content.reduce((l, t) => l + getLength(t), 0);
-  }
-};
+import Decorate from './editor/decorate';
+import Element from './editor/element';
+import { QueryError } from './editor/error';
+import Gutters from './editor/gutters';
+import Leaf, { LeafProps } from './editor/leaf';
+import { getDescendants, processValue } from './editor/value';
 
-export default function SqlEditor(props: { query: string }) {
-  const language = 'sql';
-  const editor = useMemo(() => withReact(createEditor()), []);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+export default function QueryEditor(props: { query: string; focusOffset?: number }) {
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...(props as LeafProps)} />, []);
+  const renderElement = useCallback((props: RenderElementProps) => <Element {...{ ...props, editor, errors }} />, []);
+  const decorate = Decorate;
 
-  const initialValue: Descendant[] = [
-    {
-      children: [
-        {
-          text: props.query,
-        },
-      ],
-    },
-  ];
+  const onValueChange = (descendants: Descendant[]) => {
+    const { value, lines } = processValue(descendants);
+    setValue(value);
+    setLines(lines);
+  };
 
-  const decorate = useCallback(
-    ([node, path]) => {
-      const ranges = [];
+  const descendants = getDescendants(props.query);
+  const { value: defaultValue, lines: defaultLines } = processValue(descendants);
 
-      if (!Text.isText(node)) {
-        return ranges;
-      }
+  const [value, setValue] = useState(defaultValue);
+  const [lines, setLines] = useState(defaultLines);
+  const [errors, setErrors] = useState<QueryError[]>([]);
 
-      const tokens = Prism.tokenize(node.text, Prism.languages[language] as Prism.Grammar);
-
-      let start = 0;
-
-      for (const token of tokens) {
-        const length = getLength(token);
-        const end = start + length;
-
-        if (typeof token !== 'string') {
-          ranges.push({
-            [token.type]: true,
-            anchor: { path, offset: start },
-            focus: { path, offset: end },
-          });
-        }
-
-        start = end;
-      }
-
-      return ranges;
-    },
-    [language],
-  );
+  useEffect(() => {
+    ReactEditor.focus(editor);
+    Transforms.select(editor, Editor.start(editor, []));
+    Transforms.move(editor, {
+      distance: props.focusOffset,
+      unit: 'offset',
+    });
+  }, [editor, props.focusOffset]);
 
   return (
-    <Slate
-      editor={editor}
-      value={initialValue}
-    >
-      <Editable
-        className="w-full whitespace-pre-line rounded-[3px] border border-dbfy-border bg-[#fff] px-[9px] py-2 font-mono text-xs leading-[1.4em]"
-        decorate={decorate}
-        renderLeaf={renderLeaf}
-      />
-    </Slate>
+    <>
+      <Slate
+        editor={editor}
+        value={descendants}
+        onChange={onValueChange}
+      >
+        <div className="flex w-full whitespace-pre-line rounded-[3px] border border-dbfy-border bg-[#fff] font-mono text-xs leading-[1.4em]">
+          <div className="select-none rounded-tl-[3px] rounded-bl-[3px] border-r border-r-dbfy-border bg-dbfy-input py-2 text-right text-dbfy-light-icon">
+            <Gutters
+              lines={lines}
+              errors={errors}
+            />
+          </div>
+          <Editable
+            className="w-full py-2"
+            decorate={decorate}
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+          />
+        </div>
+      </Slate>
+      <textarea
+        value={value}
+        readOnly
+        style={{ width: '100%', height: '200px', border: '1px solid', display: 'none' }}
+      ></textarea>
+    </>
   );
 }
-
-const Leaf = ({ attributes, children, leaf }) => {
-  let className = '';
-  for (const keyword in prismClassMap) {
-    if (typeof leaf[keyword] !== 'undefined') {
-      className = (prismClassMap.token + ' ' + prismClassMap[keyword]) as string;
-      break;
-    }
-  }
-
-  return (
-    <span
-      {...attributes}
-      className={className}
-    >
-      {children}
-    </span>
-  );
-};

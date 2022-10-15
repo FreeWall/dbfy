@@ -1,7 +1,7 @@
 import Prism from 'prismjs';
-import 'prismjs/components/prism-sql';
-
 import styles from './prism.module.css';
+
+import 'prismjs/components/prism-sql';
 
 export const prismClassMap: { [key: string]: string | undefined } = {
   token: styles.token,
@@ -15,6 +15,7 @@ export const prismClassMap: { [key: string]: string | undefined } = {
   boolean: styles.boolean,
   number: styles.number,
   operator: styles.operator,
+  error: styles.error,
 };
 
 Prism.hooks.add('wrap', (env) => {

@@ -1,6 +1,7 @@
 import { fsync, readdirSync } from 'fs';
 import { readdir } from 'fs/promises';
 import { env } from './src/env/server.mjs';
+
 /**
  * Don't be scared of the generics here.
  * All they do is to give us autocompletion when using this.
@@ -13,9 +14,12 @@ function defineNextConfig(config) {
   return config;
 }
 
-export default function next(stage) {
-  console.info(stage);
+/*const withAnalyzer = NextBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: true,
+});*/
 
+export default function next(stage) {
   return defineNextConfig({
     reactStrictMode: true,
     swcMinify: true,

@@ -1,21 +1,31 @@
 import { useState } from 'react';
-import SqlEditor from './query/editor';
-import SqlPreview from './query/preview';
-import Tooltip from './query/tooltip';
+
+import QueryEditor from './query/editor';
+import QueryPreview from './query/preview';
+import QueryTooltip from './query/tooltip';
 
 export default function SqlQuery(props: { query: string }) {
   const [isEditor, setEditor] = useState(false);
+  const [editorOffset, setEditorOffset] = useState(0);
 
   return (
-    <div
-      className="relative flex"
-      onMouseDown={() => setEditor(true)}
-    >
-      {isEditor && <SqlEditor query={props.query} />}
+    <div className="relative">
+      {isEditor && (
+        <QueryEditor
+          query={props.query}
+          focusOffset={editorOffset}
+        />
+      )}
       {!isEditor && (
         <>
-          <SqlPreview query={props.query} />
-          <Tooltip text="34 ms" />
+          <QueryPreview
+            query={props.query}
+            onClick={(offset) => {
+              setEditor(true);
+              setEditorOffset(offset);
+            }}
+          />
+          <QueryTooltip text="34 ms" />
         </>
       )}
     </div>

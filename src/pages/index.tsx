@@ -1,8 +1,10 @@
 import Head from 'next/head';
+import sqlLint from 'sql-lint';
+
 import Layout from '../components/layout';
-import type { NextPage } from 'next';
 import SqlQuery from '../components/sql/query';
 
+import type { NextPage } from 'next';
 const query =
   "SELECT * FROM `forum_categories`\n\
 WHERE cat_name = 'Lorem ipsum' OR cat_parent = 13\n\
@@ -30,3 +32,18 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+  const errors = await sqlLint({
+    sql: 'select * from ;',
+    host: 'mysql-rfam-public.ebi.ac.uk',
+    port: 4497,
+    user: 'rfamro',
+  });
+
+  console.log(errors);
+
+  return {
+    props: {},
+  };
+}
