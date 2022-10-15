@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import sqlLint from 'sql-lint';
 
 import Layout from '../components/layout';
 import SqlQuery from '../components/sql/query';
@@ -33,7 +32,7 @@ Home.getLayout = function getLayout(page: ReactElement) {
 
 export default Home;
 
-export async function getServerSideProps() {
+/*export async function getServerSideProps() {
   const errors = await sqlLint({
     sql: 'select * from ;',
     host: 'mysql-rfam-public.ebi.ac.uk',
@@ -46,4 +45,4 @@ export async function getServerSideProps() {
   return {
     props: {},
   };
-}
+}*/

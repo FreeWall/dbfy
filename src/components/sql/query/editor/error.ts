@@ -1,5 +1,8 @@
 export interface QueryError {
   message: string;
   line?: number;
-  offset: number[];
+  offset: {
+    start: number;
+    end: number;
+  };
 }

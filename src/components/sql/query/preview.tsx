@@ -24,7 +24,7 @@ export default function QueryPreview(props: { query: string; onClick?: (offset: 
 
   return (
     <div
-      className="w-full cursor-text whitespace-pre-line rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 font-mono text-xs leading-[1.4em] hover:border-dbfy-light-icon"
+      className="w-full cursor-text whitespace-pre-line rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 pr-[42px] font-mono text-xs leading-[1.4em] hover:border-dbfy-light-icon"
       dangerouslySetInnerHTML={{ __html: html }}
       onClick={onClick}
       ref={ref}

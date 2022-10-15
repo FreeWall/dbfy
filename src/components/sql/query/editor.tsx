@@ -11,9 +11,22 @@ import Leaf, { LeafProps } from './editor/leaf';
 import { getDescendants, processValue } from './editor/value';
 
 export default function QueryEditor(props: { query: string; focusOffset?: number }) {
+  const descendants = getDescendants(props.query);
+  const { value: defaultValue, lines: defaultLines } = processValue(descendants);
+
+  const [value, setValue] = useState(defaultValue);
+  const [lines, setLines] = useState(defaultLines);
+  const [errors, setErrors] = useState<QueryError[]>([]);
+
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  const renderLeaf = useCallback((props: RenderLeafProps) => <Leaf {...(props as LeafProps)} />, []);
-  const renderElement = useCallback((props: RenderElementProps) => <Element {...{ ...props, editor, errors }} />, []);
+  const renderLeaf = useCallback(
+    (props: RenderLeafProps) => <Leaf {...{ ...(props as LeafProps), errors }} />,
+    [errors],
+  );
+  const renderElement = useCallback(
+    (props: RenderElementProps) => <Element {...{ ...props, editor, errors }} />,
+    [editor, errors],
+  );
   const decorate = Decorate;
 
   const onValueChange = (descendants: Descendant[]) => {
@@ -22,13 +35,6 @@ export default function QueryEditor(props: { query: string; focusOffset?: number
     setLines(lines);
   };
 
-  const descendants = getDescendants(props.query);
-  const { value: defaultValue, lines: defaultLines } = processValue(descendants);
-
-  const [value, setValue] = useState(defaultValue);
-  const [lines, setLines] = useState(defaultLines);
-  const [errors, setErrors] = useState<QueryError[]>([]);
-
   useEffect(() => {
     ReactEditor.focus(editor);
     Transforms.select(editor, Editor.start(editor, []));
@@ -36,6 +42,17 @@ export default function QueryEditor(props: { query: string; focusOffset?: number
       distance: props.focusOffset,
       unit: 'offset',
     });
+
+    setErrors([
+      {
+        message: 'foo',
+        line: 3,
+        offset: {
+          start: 0,
+          end: 5,
+        },
+      },
+    ]);
   }, [editor, props.focusOffset]);
 
   return (
@@ -45,13 +62,11 @@ export default function QueryEditor(props: { query: string; focusOffset?: number
         value={descendants}
         onChange={onValueChange}
       >
-        <div className="flex w-full whitespace-pre-line rounded-[3px] border border-dbfy-border bg-[#fff] font-mono text-xs leading-[1.4em]">
-          <div className="select-none rounded-tl-[3px] rounded-bl-[3px] border-r border-r-dbfy-border bg-dbfy-input py-2 text-right text-dbfy-light-icon">
-            <Gutters
-              lines={lines}
-              errors={errors}
-            />
-          </div>
+        <div className="flex w-full overflow-hidden whitespace-pre-line rounded-[3px] border border-dbfy-border bg-[#fff] font-mono text-xs leading-[1.4em]">
+          <Gutters
+            lines={lines}
+            errors={errors}
+          />
           <Editable
             className="w-full py-2"
             decorate={decorate}

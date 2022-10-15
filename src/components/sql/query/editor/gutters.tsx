@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { QueryError } from './error';
 
 const ErrorsTooltip = (props: { errors: QueryError[] }) => {
@@ -25,8 +26,19 @@ const LineGutter = (props: { number: number; errors?: QueryError[] }) => {
 };
 
 export default function Gutters(props: { lines: number; errors: QueryError[] }) {
+  const [isOpened, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(true);
+  }, []);
+
   return (
-    <>
+    <div
+      className={
+        'select-none rounded-tl-[3px] rounded-bl-[3px] border-r border-r-dbfy-border bg-dbfy-input py-2 text-right text-dbfy-light-icon transition-[margin-left] duration-200' +
+        (isOpened ? '' : ' ml-[-32px]')
+      }
+    >
       {[...Array(props.lines)].map((el, i) => {
         const line = i + 1;
         const errors: QueryError[] = props.errors.filter((error) => error.line == line);
@@ -39,6 +51,6 @@ export default function Gutters(props: { lines: number; errors: QueryError[] }) 
           />
         );
       })}
-    </>
+    </div>
   );
 }
