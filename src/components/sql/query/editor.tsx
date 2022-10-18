@@ -1,85 +1,51 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createEditor, Descendant, Editor, Transforms } from 'slate';
-import { withHistory } from 'slate-history';
-import { Editable, ReactEditor, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
+import { MySQL, sql } from '@codemirror/lang-sql';
+import ReactCodeMirror from '@uiw/react-codemirror';
+import { useState } from 'react';
+import { SqlQuery } from '../../../models/sql/query'; //TODO: @models https://nextjs.org/docs/advanced-features/module-path-aliases
+import { autocompletionPlugin } from './editor/plugins/autocompletion';
+import { contentLinesPlugin } from './editor/plugins/contentLines';
+import { gutterLinesPlugin } from './editor/plugins/gutterLines';
 
-import Decorate from './editor/decorate';
-import Element from './editor/element';
-import { QueryError } from './editor/error';
-import Gutters from './editor/gutters';
-import Leaf, { LeafProps } from './editor/leaf';
-import { getDescendants, processValue } from './editor/value';
+interface SqlQueryEditorProps {
+  query: SqlQuery;
+}
 
-export default function QueryEditor(props: { query: string; focusOffset?: number }) {
-  const descendants = getDescendants(props.query);
-  const { value: defaultValue, lines: defaultLines } = processValue(descendants);
-
-  const [value, setValue] = useState(defaultValue);
-  const [lines, setLines] = useState(defaultLines);
-  const [errors, setErrors] = useState<QueryError[]>([]);
-
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <Leaf {...{ ...(props as LeafProps), errors }} />,
-    [errors],
-  );
-  const renderElement = useCallback(
-    (props: RenderElementProps) => <Element {...{ ...props, editor, errors }} />,
-    [editor, errors],
-  );
-  const decorate = Decorate;
-
-  const onValueChange = (descendants: Descendant[]) => {
-    const { value, lines } = processValue(descendants);
-    setValue(value);
-    setLines(lines);
-  };
-
-  useEffect(() => {
-    ReactEditor.focus(editor);
-    Transforms.select(editor, Editor.start(editor, []));
-    Transforms.move(editor, {
-      distance: props.focusOffset,
-      unit: 'offset',
-    });
-
-    setErrors([
-      {
-        message: 'foo',
-        line: 3,
-        offset: {
-          start: 0,
-          end: 5,
-        },
-      },
-    ]);
-  }, [editor, props.focusOffset]);
+export default function SqlQueryEditor(props: SqlQueryEditorProps) {
+  const [isEditing, setEditing] = useState(false);
+  const [isReadonly, setReadonly] = useState(false);
 
   return (
-    <>
-      <Slate
-        editor={editor}
-        value={descendants}
-        onChange={onValueChange}
-      >
-        <div className="flex w-full overflow-hidden whitespace-pre-line rounded-[3px] border border-dbfy-border bg-[#fff] font-mono text-xs leading-[1.4em]">
-          <Gutters
-            lines={lines}
-            errors={errors}
-          />
-          <Editable
-            className="w-full py-2"
-            decorate={decorate}
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-          />
-        </div>
-      </Slate>
-      <textarea
-        value={value}
-        readOnly
-        style={{ width: '100%', height: '200px', border: '1px solid', display: 'none' }}
-      ></textarea>
-    </>
+    <div className="w-full">
+      <ReactCodeMirror
+        value={props.query.value}
+        basicSetup={{
+          foldGutter: false,
+          lineNumbers: false,
+          highlightActiveLine: false,
+          highlightActiveLineGutter: false,
+          highlightSelectionMatches: false,
+          drawSelection: false,
+          dropCursor: true,
+          indentOnInput: false,
+          bracketMatching: true,
+          closeBrackets: true,
+          autocompletion: true,
+          rectangularSelection: false,
+          crosshairCursor: false,
+          closeBracketsKeymap: false,
+          searchKeymap: false,
+          foldKeymap: false,
+          completionKeymap: false,
+          lintKeymap: false,
+        }}
+        readOnly={isReadonly}
+        extensions={[
+          sql({ upperCaseKeywords: true, dialect: MySQL }),
+          gutterLinesPlugin,
+          contentLinesPlugin,
+          autocompletionPlugin,
+        ]}
+      />
+    </div>
   );
 }

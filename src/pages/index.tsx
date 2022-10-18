@@ -1,14 +1,17 @@
-import Head from 'next/head';
-
-import Layout from '../components/layout';
-import SqlQuery from '../components/sql/query';
-
 import type { NextPage } from 'next';
-const query =
-  "SELECT * FROM `forum_categories`\n\
+import Head from 'next/head';
+import Layout from '../components/layout';
+import SqlQueryEditor from '../components/sql/query/editor';
+import SqlQueryStatic from '../components/sql/query/static';
+import { SqlQuery } from '../models/sql/query';
+
+const query: SqlQuery = {
+  value:
+    "SELECT * FROM `forum_categories`\n\
 WHERE cat_name = 'Lorem ipsum' OR cat_parent = 13\n\
 ORDER BY cat_id ASC;\n\n\
-DECLARE { @VARIABLE data_type [ = value ] }; -- some comment";
+DECLARE { @VARIABLE data_type [ = value ] }; -- some comment",
+};
 
 const Home: NextPage = () => {
   return (
@@ -17,9 +20,16 @@ const Home: NextPage = () => {
         <title>dbfy</title>
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center bg-[#3c3f41] p-4">
         <div className="w-[500px]">
-          <SqlQuery query={query} />
+          <SqlQueryEditor query={query} />
+        </div>
+
+        <div className="mt-10 w-[500px] rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 pr-[42px] ">
+          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
+          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
+          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
+          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
         </div>
       </main>
     </>

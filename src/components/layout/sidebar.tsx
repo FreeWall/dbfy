@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <Resizable
       as="aside"
-      className={'min-w-[240px] bg-dbfy-sidebar'}
+      className={'min-w-[240px] bg-[#2a2d2e]'}
       enable={{ right: true }}
       defaultSize={{ width: size as number, height: 'auto' }}
       size={{ width: size as number, height: 'auto' }}

@@ -1,4 +1,9 @@
-export default function QueryTooltip(props: { text?: string; loading?: boolean }) {
+interface TooltipProps {
+  text?: string;
+  loading?: boolean;
+}
+
+export default function Tooltip(props: TooltipProps) {
   return (
     <div className="pointer-events-none absolute top-2 right-[9px] text-xs font-medium text-dbfy-light-icon">
       <div className="inline-block align-middle">{props.text}</div>
