@@ -1,3 +1,23 @@
-export default function Server() {
-  return <div className="p-[20px]">Server</div>;
+import classNames from 'classnames';
+
+interface ServerProps {
+  status: 'online' | 'offline';
+  server: string;
+}
+
+export default function Server(props: ServerProps) {
+  return (
+    <div className="px-[20px]">
+      <div className="text-[11px] font-medium">Server</div>
+      <div className="flex items-center">
+        <div
+          className={classNames('mr-2 h-[9px] w-[9px] rounded-full bg-dbfy-text', {
+            'bg-[#78b14f]': props.status == 'online',
+            'bg-[#cc0000]': props.status == 'offline',
+          })}
+        />
+        <div className="font-semibold">{props.server}</div>
+      </div>
+    </div>
+  );
 }

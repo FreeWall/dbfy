@@ -5,7 +5,7 @@ import Sidebar from './layout/sidebar';
 
 export default function Layout({ children }: { children: ReactElement }) {
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <Sidebar />
       <Center>{children}</Center>
     </div>

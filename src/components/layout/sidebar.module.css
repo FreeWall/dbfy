@@ -1,0 +1,15 @@
+.resizeHandle:after {
+  content: '';
+  transition: background-color 0.2s ease-out;
+  transition-delay: 0.2s;
+  background-color: transparent;
+}
+
+.resizeHandle:hover:after, .resizing .resizeHandle:after {
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  width: 4px;
+  height: 100%;
+  background-color: #597ce5;
+}

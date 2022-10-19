@@ -1,8 +1,8 @@
+import { SqlQuery } from '@/models/sql/query';
 import { Grammar } from 'prismjs';
 import { useMemo } from 'react';
-import { SqlQuery } from '../../../models/sql/query';
 
-import Prism from '../../../models/sql/prism';
+import Prism from '@/models/sql/prism';
 
 interface SqlQueryStaticProps {
   query: string | SqlQuery;

@@ -1,7 +1,7 @@
+import { SqlQuery } from '@/models/sql/query';
 import { MySQL, sql } from '@codemirror/lang-sql';
 import ReactCodeMirror from '@uiw/react-codemirror';
 import { useState } from 'react';
-import { SqlQuery } from '../../../models/sql/query'; //TODO: @models https://nextjs.org/docs/advanced-features/module-path-aliases
 import { autocompletionPlugin } from './editor/plugins/autocompletion';
 import { contentLinesPlugin } from './editor/plugins/contentLines';
 import { gutterLinesPlugin } from './editor/plugins/gutterLines';

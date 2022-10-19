@@ -3,10 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+}
+
 body {
   color: theme('colors.dbfy-text');
   font-size: 13px;
   font-family: 'Inter', sans-serif;
+  height: 100%;
+}
+
+#__next {
+  height: 100%;
 }
 
 .border-spinner {
