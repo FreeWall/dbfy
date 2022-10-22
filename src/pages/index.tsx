@@ -20,12 +20,12 @@ const Home: NextPage = () => {
         <title>dbfy</title>
       </Head>
 
-      <main className="bg-[3c3f41] container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+      <div className="bg-[3c3f41] container flex h-full flex-col items-center justify-center p-4">
         <div className="w-[500px]">
           <SqlQueryEditor query={query} />
         </div>
 
-        <div className="mt-10 w-[500px] rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 pr-[42px] ">
+        <div className="mt-10 w-[500px] rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 pr-[42px]">
           {[...Array(10)].map((x, i) => (
             <SqlQueryStatic
               key={i}
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             />
           ))}
         </div>
-      </main>
+      </div>
     </>
   );
 };

@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
-import Center from './layout/center';
+import Main from './layout/main';
 import Sidebar from './layout/sidebar';
 
 export default function Layout({ children }: { children: ReactElement }) {
   return (
     <div className="flex h-full">
       <Sidebar />
-      <Center>{children}</Center>
+      <Main>{children}</Main>
     </div>
   );
 }

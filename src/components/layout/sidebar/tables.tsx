@@ -9,9 +9,9 @@ interface TablesProps {
 }
 
 export default function Tables(props: TablesProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [loadingTable, setLoadingTable] = useState<string>();
-  const { TableNameTooltip, onMouseEnter, onMouseLeave } = useTableNameTooltip(ref.current?.scrollTop);
+  const { TableNameTooltip, onMouseEnter, onMouseLeave } = useTableNameTooltip(scrollContainerRef.current?.scrollTop);
 
   function onClickTable(table: string) {
     console.log('onClickTable', table);
@@ -23,7 +23,7 @@ export default function Tables(props: TablesProps) {
     <>
       <div
         className="max-h-full overflow-y-auto break-all pb-8 text-xs font-medium leading-[1.9em]"
-        ref={ref}
+        ref={scrollContainerRef}
       >
         {props.tables.map((table) => (
           <div
@@ -33,7 +33,7 @@ export default function Tables(props: TablesProps) {
             })}
             onClick={() => onClickTable(table)}
           >
-            <div className="mr-2 inline-block h-4 w-4 flex-shrink-0 fill-dbfy-dark-icon align-middle">
+            <div className="mr-2 flex h-4 w-4 flex-shrink-0 items-center fill-dbfy-dark-icon">
               {(loadingTable == table && <div className="border-spinner h-4 w-4 border-[3px]" />) || <TableIcon />}
             </div>
             <div
