@@ -1,6 +1,5 @@
 import { SqlQuery } from '@/models/sql/query';
 import { Grammar } from 'prismjs';
-import { useMemo } from 'react';
 
 import Prism from '@/models/sql/prism';
 
@@ -10,12 +9,11 @@ interface SqlQueryStaticProps {
 
 export default function SqlQueryStatic(props: SqlQueryStaticProps) {
   const query = typeof props.query === 'string' ? props.query : props.query.value;
-  const html = useMemo(() => Prism.highlight(query, Prism.languages['sql'] as Grammar, 'sql'), [query]);
 
   return (
     <div
       className="font-mono text-xs leading-[1.4em]"
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: Prism.highlight(query, Prism.languages['sql'] as Grammar, 'sql') }}
     ></div>
   );
 }

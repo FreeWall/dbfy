@@ -13,7 +13,7 @@ export default function Server(props: ServerProps) {
         <div
           className={classNames('mr-2 h-[9px] w-[9px] rounded-full bg-dbfy-text', {
             'bg-[#78b14f]': props.status == 'online',
-            'bg-[#cc0000]': props.status == 'offline',
+            'bg-[#b14f4f]': props.status == 'offline',
           })}
         />
         <div className="font-semibold">{props.server}</div>

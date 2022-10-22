@@ -20,16 +20,18 @@ const Home: NextPage = () => {
         <title>dbfy</title>
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center bg-[#3c3f41] p-4">
+      <main className="bg-[3c3f41] container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
         <div className="w-[500px]">
           <SqlQueryEditor query={query} />
         </div>
 
         <div className="mt-10 w-[500px] rounded-[3px] border border-dbfy-border bg-dbfy-input px-[9px] py-2 pr-[42px] ">
-          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
-          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
-          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
-          <SqlQueryStatic query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"} />
+          {[...Array(10)].map((x, i) => (
+            <SqlQueryStatic
+              key={i}
+              query={"SELECT * FROM `forum_categories` WHERE cat_name = 'Lorem ipsum'"}
+            />
+          ))}
         </div>
       </main>
     </>

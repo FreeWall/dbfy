@@ -19,9 +19,6 @@ body {
 }
 
 .border-spinner {
-  display: inline-block;
-  vertical-align: middle;
-  box-sizing: border-box;
   border-radius: 50%;
   border-color: theme('colors.dbfy-border');
   border-top-color: theme('colors.dbfy-dark-icon');
