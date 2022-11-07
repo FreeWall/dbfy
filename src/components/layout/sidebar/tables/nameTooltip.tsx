@@ -50,7 +50,7 @@ export function useTableNameTooltip(offsetTop?: number) {
         target: event.target as HTMLDivElement,
         visible: (event.target as HTMLDivElement).offsetWidth < (event.target as HTMLDivElement).scrollWidth,
       });
-    }, 500);
+    }, 300);
   }
 
   function onMouseLeave() {

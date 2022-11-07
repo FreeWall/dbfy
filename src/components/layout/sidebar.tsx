@@ -1,48 +1,25 @@
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 import { Resizable } from 're-resizable';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 import styles from './sidebar.module.css';
 import Database from './sidebar/database';
 import Header from './sidebar/header';
 import Server from './sidebar/server';
 import Tables from './sidebar/tables';
 
-const tables = [
-  'actionlog',
-  'bans',
-  'bans_exceptions',
-  'chatcommands',
-  'chatlog',
-  'cosmetics',
-  'cosmetics_transactions',
-  'cosmetics_transactions_categories',
-  'forum_categories',
-  'forum_posts',
-  'forum_threads',
-  'forum_threads_views',
-  'friends',
-  'friends_requests',
-  'friends_settings',
-  'messages_posts',
-  'messages_threads',
-  'news',
-  'news_comments',
-  'permissions',
-  'permissions_entity',
-  'permissions_inheritance',
-  'polls',
-  'polls_comments',
-  'polls_votes',
-  'shops',
-  'shops_markets',
-  'shops_transactions',
-  'votes',
-];
-
 export default function Sidebar() {
   const [size, setSize] = useLocalStorage('size', 240);
   const [isResizing, setIsResizing] = useState(false);
+
+  const { data } = useQuery('neco', async () => {
+    const res = await fetch('/tables.json');
+    return res.json();
+  });
+
+  const router = useRouter();
 
   return (
     <Resizable
@@ -76,8 +53,8 @@ export default function Sidebar() {
       />
       <Database />
       <Tables
-        tables={tables}
-        currentTable={'forum_categories'}
+        tables={data ? data : []}
+        currentTable={router.query.id ?? undefined}
       />
     </Resizable>
   );
