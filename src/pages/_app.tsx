@@ -1,3 +1,4 @@
+import Login from '@/components/layout/login';
 import { sessionOptions } from '@/server/session/options';
 import { SessionProvider } from '@/server/session/provider';
 import { TrpcRouter } from '@/server/trpc/router';
@@ -14,6 +15,10 @@ import '../styles/globals.css';
 const queryClient = new QueryClient();
 
 const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { session, ...pageProps } }) => {
+  if (!session.credentials) {
+    Component = Login;
+  }
+
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
@@ -56,11 +61,6 @@ export default withTRPC<TrpcRouter>({
       ],
       url,
       transformer: superjson,
-      headers() {
-        return {
-          cookie: ctx?.req?.headers.cookie,
-        };
-      },
     };
   },
   ssr: false,

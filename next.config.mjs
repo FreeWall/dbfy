@@ -1,7 +1,3 @@
-import { fsync, readdirSync } from 'fs';
-import { readdir } from 'fs/promises';
-import { env } from './src/env/server.mjs';
-
 /**
  * Don't be scared of the generics here.
  * All they do is to give us autocompletion when using this.

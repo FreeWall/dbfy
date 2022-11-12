@@ -16,6 +16,7 @@ module.exports = {
       'dbfy-border': '#c6d2db',
       'dbfy-input': '#f3f5f9',
       'dbfy-sidebar': '#e8eef2',
+      white: '#ffffff',
     },
   },
   plugins: [],

@@ -10,6 +10,7 @@ export async function middleware(req: NextRequest) {
   ) {
     const res = NextResponse.next();
     const session = await getIronSession(req, res, sessionOptions);
+
     if (!session.credentials) {
       return NextResponse.redirect(new URL('/login', req.url));
     }

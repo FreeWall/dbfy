@@ -1,3 +1,4 @@
+import { project } from '@/models/sql/constants';
 import DropdownMenu from './header/dropdownMenu';
 import EnvLabel, { EnvLabelProps } from './header/envLabel';
 
@@ -10,7 +11,7 @@ export default function Header(props: HeaderProps) {
     <header>
       {props.envLabel && <EnvLabel {...props.envLabel} />}
       <div className="flex items-center justify-between p-[20px] text-3xl font-bold leading-none text-dbfy-light-icon">
-        <div>dbfy</div>
+        <div>{project.name}</div>
         <DropdownMenu />
       </div>
     </header>
