@@ -1,5 +1,7 @@
-import type { NextPage } from 'next';
+import { useSession } from '@/server/session/context';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { ReactElement } from 'react';
 import Layout from '../components/layout';
 import SqlQueryEditor from '../components/sql/query/editor';
 import SqlQueryStatic from '../components/sql/query/static';
@@ -13,7 +15,15 @@ ORDER BY cat_id ASC;\n\n\
 DECLARE { @VARIABLE data_type [ = value ] }; -- some comment",
 };
 
-const Home: NextPage = () => {
+const credentials = {
+  host: 'mysql-rfam-public.ebi.ac.uk',
+  port: 4497,
+  username: 'rfamro',
+};
+
+const Home: NextPage = (props) => {
+  const session = useSession();
+
   return (
     <>
       <Head>
@@ -42,19 +52,22 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default Home;
-
-/*export async function getServerSideProps() {
-  const errors = await sqlLint({
-    sql: 'select * from ;',
-    host: 'mysql-rfam-public.ebi.ac.uk',
-    port: 4497,
-    user: 'rfamro',
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  /* const sequelize = new Sequelize({
+    dialect: 'mysql',
+    host: credentials.host,
+    port: credentials.port,
+    username: credentials.username,
   });
 
-  console.log(errors);
+  await sequelize.authenticate();
+
+  const [neco] = await sequelize.query('show databases');
+  console.log(neco); */
 
   return {
     props: {},
   };
-}*/
+};
+
+export default Home;

@@ -3,29 +3,17 @@ import { procedure, router } from '../common';
 
 export default router({
   example: router({
-    bagr: procedure
-      .output(
-        z.object({
-          greeting: z.string(),
-          cursor: z.number().nullish(),
-        }),
-      )
-      .query(() => {
-        return { greeting: 'ahoj' };
-      }),
+    get: procedure.query(({ ctx }) => {
+      return { greeting: 'ahoj', session: ctx.session };
+    }),
 
-    create: procedure
+    post: procedure
       .input(
         z.object({
           greeting: z.string(),
         }),
       )
-      .output(
-        z.object({
-          greeting: z.string(),
-        }),
-      )
-      .mutation(() => {
+      .mutation((req) => {
         return { greeting: 'ahoj' };
       }),
   }),

@@ -1,24 +1,45 @@
+import { sessionOptions } from '@/server/session/options';
+import { SessionProvider } from '@/server/session/provider';
 import { TrpcRouter } from '@/server/trpc/router';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
-import type { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
-import type { AppType } from 'next/app';
+import { getIronSession, IronSession } from 'iron-session';
+import type { AppContext, AppType } from 'next/app';
+import App from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import superjson from 'superjson';
 import '../styles/globals.css';
 
 const queryClient = new QueryClient();
 
-const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
+const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider session={session}>{getLayout(<Component {...pageProps} />)}</SessionProvider>
-    </QueryClientProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        {getLayout(
+          <Component
+            session={session}
+            {...pageProps}
+          />,
+        )}
+      </QueryClientProvider>
+    </SessionProvider>
   );
+};
+
+MyApp.getInitialProps = async (context: AppContext) => {
+  const pageProps = await App.getInitialProps(context);
+  const session = await getIronSession(context.ctx.req, context.ctx.res, sessionOptions);
+
+  return {
+    pageProps: {
+      session,
+      ...pageProps,
+    },
+  };
 };
 
 export default withTRPC<TrpcRouter>({
@@ -35,6 +56,11 @@ export default withTRPC<TrpcRouter>({
       ],
       url,
       transformer: superjson,
+      headers() {
+        return {
+          cookie: ctx?.req?.headers.cookie,
+        };
+      },
     };
   },
   ssr: false,
