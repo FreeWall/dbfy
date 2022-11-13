@@ -4,10 +4,9 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
-      xl: { max: '1279px' },
-      lg: { max: '1023px' },
       md: { max: '767px' },
       sm: { max: '639px' },
+      smh: { raw: '(max-height: 640px)' },
     },
     colors: {
       'dbfy-text': '#3f4b53',

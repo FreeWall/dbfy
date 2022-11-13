@@ -1,9 +1,22 @@
+import { Credentials } from '@/types/credentials';
 import { IronSessionData } from 'iron-session';
-import { ReactNode } from 'react';
-import { SessionContext } from './context';
+import { createContext, ReactNode, useContext } from 'react';
+
+interface SessionContextData {
+  authenticated: boolean;
+  credentials?: Omit<Credentials, 'password'>;
+}
+
+export const SessionContext = createContext<SessionContextData>({
+  authenticated: false,
+});
+
+export function useSession() {
+  return useContext(SessionContext);
+}
 
 export function SessionProvider(props: { session: IronSessionData; children: ReactNode }) {
-  const credentials = props.session.credentials;
+  const credentials = props.session?.credentials;
 
   return (
     <SessionContext.Provider

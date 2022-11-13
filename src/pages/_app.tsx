@@ -1,13 +1,10 @@
-import Login from '@/components/layout/login';
-import { sessionOptions } from '@/server/session/options';
-import { SessionProvider } from '@/server/session/provider';
+import { SessionProvider } from '@/contexts/session';
 import { TrpcRouter } from '@/server/trpc/router';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
-import { getIronSession, IronSession } from 'iron-session';
-import type { AppContext, AppType } from 'next/app';
-import App from 'next/app';
+import { IronSession } from 'iron-session';
+import type { AppType } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import superjson from 'superjson';
 import '../styles/globals.css';
@@ -15,10 +12,6 @@ import '../styles/globals.css';
 const queryClient = new QueryClient();
 
 const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { session, ...pageProps } }) => {
-  if (!session.credentials) {
-    Component = Login;
-  }
-
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
@@ -33,18 +26,6 @@ const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { sess
       </QueryClientProvider>
     </SessionProvider>
   );
-};
-
-MyApp.getInitialProps = async (context: AppContext) => {
-  const pageProps = await App.getInitialProps(context);
-  const session = await getIronSession(context.ctx.req, context.ctx.res, sessionOptions);
-
-  return {
-    pageProps: {
-      session,
-      ...pageProps,
-    },
-  };
 };
 
 export default withTRPC<TrpcRouter>({

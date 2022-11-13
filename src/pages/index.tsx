@@ -1,4 +1,5 @@
-import { useSession } from '@/server/session/context';
+import { withSession } from '@/server/session/common';
+import { getSessionStore } from '@/server/session/store';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { ReactElement } from 'react';
@@ -21,9 +22,13 @@ const credentials = {
   username: 'rfamro',
 };
 
-const Home: NextPage = (props) => {
-  const session = useSession();
+interface HomeProps {
+  databases: {
+    Database: string;
+  }[];
+}
 
+const Home: NextPage<HomeProps> = (props) => {
   return (
     <>
       <Head>
@@ -43,6 +48,12 @@ const Home: NextPage = (props) => {
             />
           ))}
         </div>
+
+        <div>
+          {props.databases.map((database, idx) => (
+            <div key={idx}>{database.Database}</div>
+          ))}
+        </div>
       </div>
     </>
   );
@@ -52,22 +63,15 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  /* const sequelize = new Sequelize({
-    dialect: 'mysql',
-    host: credentials.host,
-    port: credentials.port,
-    username: credentials.username,
-  });
-
-  await sequelize.authenticate();
-
-  const [neco] = await sequelize.query('show databases');
-  console.log(neco); */
+export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(async ({ req, res }) => {
+  const store = getSessionStore(req.session);
 
   return {
-    props: {},
+    props: {
+      session: req.session,
+      databases: (await store.sequelize?.query('show databases'))?.[0],
+    },
   };
-};
+});
 
 export default Home;

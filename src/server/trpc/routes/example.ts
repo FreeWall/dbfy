@@ -1,10 +1,14 @@
 import { z } from 'zod';
-import { procedure, router } from '../common';
+import { procedure, procedurePublic, router } from '../common';
 
 export default router({
   example: router({
     get: procedure.query(({ ctx }) => {
       return { greeting: 'ahoj', session: ctx.session };
+    }),
+
+    getPublic: procedurePublic.query(() => {
+      return { greeting: 'ahoj' };
     }),
 
     post: procedure

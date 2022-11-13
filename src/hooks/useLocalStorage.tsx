@@ -1,4 +1,4 @@
-import { project } from '@/models/sql/constants';
+import { app } from '@/models/sql/constants';
 import { useEffect, useState } from 'react';
 
 function getStorageValue<S>(key: string, defaultValue: S): S {
@@ -13,7 +13,7 @@ function getStorageValue<S>(key: string, defaultValue: S): S {
 export function useLocalStorage<S>(
   key: string,
   defaultValue: S,
-  prefix = project.identifier + '.',
+  prefix = app.identifier + '.',
 ): [S, (value: S) => void] {
   const [value, setValue] = useState(defaultValue);
   key = prefix + key;
