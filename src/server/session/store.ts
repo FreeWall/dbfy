@@ -1,5 +1,5 @@
 import { IronSession } from 'iron-session';
-import { Sequelize } from 'sequelize';
+import { CustomSequelize } from '../sequelize/sequelize';
 
 const sessionStores: { [key: string]: SessionStore } = {};
 
@@ -10,6 +10,7 @@ export function getSessionStore(session: IronSession): SessionStore {
 
   return sessionStores[session.uniqueId] as SessionStore;
 }
+
 export interface SessionStore {
-  sequelize?: Sequelize;
+  sequelize?: CustomSequelize;
 }

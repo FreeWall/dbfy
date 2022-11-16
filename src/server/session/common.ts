@@ -2,8 +2,8 @@ import { Credentials } from '@/types/credentials';
 import * as http from 'http';
 import { getIronSession } from 'iron-session';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { getSequelize } from '../sequelize/sequelize';
 import { sessionOptions } from './options';
-import { getSequelize } from './sequelize';
 import { getSessionStore } from './store';
 
 export async function getSession(req: http.IncomingMessage | Request, res: http.ServerResponse | Response) {
@@ -18,7 +18,11 @@ export function withSession<P extends { [key: string]: any } = { [key: string]: 
     const store = getSessionStore(session);
 
     if (!store.sequelize) {
-      store.sequelize = await getSequelize(session);
+      try {
+        store.sequelize = await getSequelize(session.credentials);
+      } catch (error) {
+        session.destroy();
+      }
     }
 
     context.req.session = session;

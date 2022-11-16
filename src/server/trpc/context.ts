@@ -1,7 +1,7 @@
 import { inferAsyncReturnType } from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
+import { getSequelize } from '../sequelize/sequelize';
 import { getSession } from '../session/common';
-import { getSequelize } from '../session/sequelize';
 import { getSessionStore } from '../session/store';
 
 export async function createContext(opts: trpcNext.CreateNextContextOptions) {
@@ -11,7 +11,11 @@ export async function createContext(opts: trpcNext.CreateNextContextOptions) {
     const store = getSessionStore(session);
 
     if (!store.sequelize) {
-      store.sequelize = await getSequelize(session);
+      try {
+        store.sequelize = await getSequelize(session.credentials);
+      } catch (error) {
+        session.destroy();
+      }
     }
   }
 
