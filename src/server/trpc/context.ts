@@ -1,6 +1,6 @@
 import { inferAsyncReturnType } from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
-import { getSequelize } from '../sequelize/sequelize';
+import { getSequelize } from '../sequelize/getSequelize';
 import { getSession } from '../session/common';
 import { getSessionStore } from '../session/store';
 

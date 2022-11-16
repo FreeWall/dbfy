@@ -2,7 +2,7 @@ import { Credentials } from '@/types/credentials';
 import * as http from 'http';
 import { getIronSession } from 'iron-session';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { getSequelize } from '../sequelize/sequelize';
+import { getSequelize } from '../sequelize/getSequelize';
 import { sessionOptions } from './options';
 import { getSessionStore } from './store';
 

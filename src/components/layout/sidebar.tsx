@@ -1,3 +1,4 @@
+import { useSession } from '@/contexts/session';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -11,6 +12,7 @@ import Server from './sidebar/server';
 import Tables from './sidebar/tables';
 
 export default function Sidebar() {
+  const session = useSession();
   const [size, setSize] = useLocalStorage('size', 240);
   const [isResizing, setIsResizing] = useState(false);
 
@@ -48,7 +50,7 @@ export default function Sidebar() {
     >
       <Header />
       <Server
-        server="localhost:3306"
+        server={session.credentials.host + ':' + session.credentials.port}
         status="online"
       />
       <Database />

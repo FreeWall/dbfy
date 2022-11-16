@@ -11,12 +11,12 @@ export default function Server(props: ServerProps) {
       <div className="text-[11px] font-medium">Server</div>
       <div className="flex items-center">
         <div
-          className={classNames('mr-2 h-[9px] w-[9px] rounded-full bg-dbfy-text', {
+          className={classNames('mr-2 h-[9px] w-[9px] min-w-[9px] rounded-full bg-dbfy-text', {
             'bg-[#78b14f]': props.status == 'online',
             'bg-[#b14f4f]': props.status == 'offline',
           })}
         />
-        <div className="font-semibold">{props.server}</div>
+        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold">{props.server}</div>
       </div>
     </div>
   );

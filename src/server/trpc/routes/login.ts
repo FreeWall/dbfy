@@ -1,6 +1,6 @@
+import { getSequelize } from '@/server/sequelize/getSequelize';
 import { Credentials } from '@/types/credentials';
 import { nanoid } from 'nanoid';
-import { Sequelize } from 'sequelize';
 import { z } from 'zod';
 import { procedurePublic, router } from '../common';
 
@@ -8,13 +8,13 @@ export default router({
   login: procedurePublic
     .input(
       z.object({
-        host: z.string().default('localhost:3306'),
+        server: z.string().default('localhost:3306'),
         username: z.string(),
         password: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const hostParts = input.host.split(':');
+      const hostParts = input.server.split(':');
 
       const credentials: Credentials = {
         host: hostParts[0] as string,
@@ -23,16 +23,8 @@ export default router({
         password: input.password,
       };
 
-      const sequelize = new Sequelize({
-        dialect: 'mysql',
-        host: credentials.host,
-        port: credentials.port,
-        username: credentials.username,
-        password: credentials.password,
-      });
-
       try {
-        await sequelize.authenticate();
+        await getSequelize(credentials);
       } catch (error) {
         return {
           status: 'failed',

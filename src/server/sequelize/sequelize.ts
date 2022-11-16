@@ -1,19 +1,4 @@
-import { Credentials } from '@/types/credentials';
 import { QueryTypes, Sequelize } from 'sequelize';
-
-export async function getSequelize(credentials: Credentials) {
-  const sequelize = new CustomSequelize({
-    dialect: 'mysql',
-    host: credentials.host,
-    port: credentials.port,
-    username: credentials.username,
-    password: credentials.password,
-  });
-
-  await sequelize.authenticate();
-
-  return sequelize;
-}
 
 export class CustomSequelize extends Sequelize {
   async getDatabases() {

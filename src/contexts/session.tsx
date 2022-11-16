@@ -4,11 +4,16 @@ import { createContext, ReactNode, useContext } from 'react';
 
 interface SessionContextData {
   authenticated: boolean;
-  credentials?: Omit<Credentials, 'password'>;
+  credentials: Omit<Credentials, 'password'>;
 }
 
 export const SessionContext = createContext<SessionContextData>({
   authenticated: false,
+  credentials: {
+    host: '',
+    port: 3306,
+    username: '',
+  },
 });
 
 export function useSession() {
