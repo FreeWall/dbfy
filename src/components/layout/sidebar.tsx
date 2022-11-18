@@ -56,7 +56,7 @@ export default function Sidebar() {
       <Database />
       <Tables
         tables={data ? data : []}
-        currentTable={router.query.id ?? undefined}
+        currentTable={(router.query.id as string) ?? undefined}
       />
     </Resizable>
   );
