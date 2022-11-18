@@ -12,7 +12,7 @@ export const procedurePublic = t.procedure;
 
 export const procedure = t.procedure.use(
   t.middleware(async ({ ctx, next }) => {
-    if (!ctx.session.credentials) {
+    if (!ctx.session.crs) {
       throw new TRPCError({ code: 'UNAUTHORIZED' });
     }
 

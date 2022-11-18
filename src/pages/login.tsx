@@ -3,17 +3,19 @@ import TextInput, { TextInputProps } from '@/components/ui/TextInput';
 import { app } from '@/models/sql/constants';
 import { trpc } from '@/utils/trpc';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { ReactElement, RefObject, useRef } from 'react';
 
 interface TextField {
   name: string;
-  type: Pick<TextInputProps, 'type'>['type'];
+  type: TextInputProps['type'];
   placeholder?: string;
   ref: RefObject<HTMLInputElement>;
 }
 
 export default function Login() {
   const login = trpc.login.useMutation();
+  const router = useRouter();
 
   const fields: { [key: string]: TextField } = {
     server: {
@@ -44,6 +46,10 @@ export default function Login() {
       username: fields.username?.ref.current?.value,
       password: fields.password?.ref.current?.value,
     });
+  }
+
+  if (login.data?.status == 'success') {
+    router.push('/');
   }
 
   return (
@@ -87,8 +93,11 @@ export default function Login() {
               </div>
             </div>
             {login.isLoading && <div>loading...</div>}
+            {login.data?.status == 'failed' && <div>failed, try again</div>}
           </div>
-          <div className="mt-10 opacity-40">
+          <div className="mt-10 opacity-60">
+            <div>Example (public DB):</div>
+            <br />
             <div>mysql-rfam-public.ebi.ac.uk:4497</div>
             <div>rfamro</div>
           </div>

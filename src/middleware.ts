@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
     const session = await getIronSession(req, res, sessionOptions);
 
-    if (!session.credentials) {
+    if (!session.crs) {
       return NextResponse.rewrite(new URL('/login', req.url));
     }
   }

@@ -15,7 +15,6 @@ const Home: NextPage<HomeProps> = (props) => {
       <Head>
         <title>dbfy</title>
       </Head>
-
       <div className="container flex h-full flex-col items-center justify-center p-4">
         <div>
           {props.databases.map((database, idx) => (

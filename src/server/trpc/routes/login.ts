@@ -17,10 +17,10 @@ export default router({
       const hostParts = input.server.split(':');
 
       const credentials: Credentials = {
-        host: hostParts[0] as string,
-        port: (hostParts[1] ?? 3306) as number,
-        username: input.username,
-        password: input.password,
+        h: hostParts[0] as string,
+        p: (hostParts[1] ?? 3306) as number,
+        u: input.username,
+        pw: input.password,
       };
 
       try {
@@ -31,8 +31,8 @@ export default router({
         };
       }
 
-      ctx.session.uniqueId = nanoid();
-      ctx.session.credentials = credentials;
+      ctx.session.id = nanoid(8);
+      ctx.session.crs = credentials;
       await ctx.session.save();
 
       return {

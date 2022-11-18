@@ -4,15 +4,15 @@ import { createContext, ReactNode, useContext } from 'react';
 
 interface SessionContextData {
   authenticated: boolean;
-  credentials: Omit<Credentials, 'password'>;
+  credentials: Omit<Credentials, 'pw'>;
 }
 
 export const SessionContext = createContext<SessionContextData>({
   authenticated: false,
   credentials: {
-    host: '',
-    port: 3306,
-    username: '',
+    h: '',
+    p: 3306,
+    u: '',
   },
 });
 
@@ -21,7 +21,7 @@ export function useSession() {
 }
 
 export function SessionProvider(props: { session: IronSessionData; children: ReactNode }) {
-  const credentials = props.session?.credentials;
+  const credentials = props.session?.crs;
 
   return (
     <SessionContext.Provider
@@ -29,9 +29,9 @@ export function SessionProvider(props: { session: IronSessionData; children: Rea
         authenticated: !!credentials,
         ...(!!credentials && {
           credentials: {
-            host: credentials.host,
-            port: credentials.port,
-            username: credentials.username,
+            h: credentials.h,
+            p: credentials.p,
+            u: credentials.u,
           },
         }),
       }}

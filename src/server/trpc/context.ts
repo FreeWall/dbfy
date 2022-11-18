@@ -7,12 +7,12 @@ import { getSessionStore } from '../session/store';
 export async function createContext(opts: trpcNext.CreateNextContextOptions) {
   const session = await getSession(opts.req, opts.res);
 
-  if (session.uniqueId && session.credentials) {
+  if (session.id && session.crs) {
     const store = getSessionStore(session);
 
     if (!store.sequelize) {
       try {
-        store.sequelize = await getSequelize(session.credentials);
+        store.sequelize = await getSequelize(session.crs);
       } catch (error) {
         session.destroy();
       }

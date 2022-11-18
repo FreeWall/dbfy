@@ -15,11 +15,12 @@ export function withSession<P extends { [key: string]: any } = { [key: string]: 
 ) {
   return async function withSessionInit(context: GetServerSidePropsContext) {
     const session = await getSession(context.req, context.res);
+
     const store = getSessionStore(session);
 
     if (!store.sequelize) {
       try {
-        store.sequelize = await getSequelize(session.credentials);
+        store.sequelize = await getSequelize(session.crs);
       } catch (error) {
         session.destroy();
       }
@@ -33,7 +34,8 @@ export function withSession<P extends { [key: string]: any } = { [key: string]: 
 
 declare module 'iron-session' {
   interface IronSessionData {
-    uniqueId: string;
-    credentials: Credentials;
+    id: string;
+    /** credentials */
+    crs: Credentials;
   }
 }
