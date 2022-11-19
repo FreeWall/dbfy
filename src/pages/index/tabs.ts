@@ -1,31 +1,31 @@
-import { Tab } from '@/components/ui/tabs';
+import { TabsProps } from '@/components/ui/tabs';
 import { memo } from 'react';
+import { HomeProps } from '../index.page';
 import TableIcon from './../../components/icons/table.svg';
+import Databases from './tabs/databases';
+import Privileges from './tabs/privileges';
 const MemoTableIcon = memo(TableIcon);
 
-export const leftTabs: Tab[] = [
-  {
-    id: 'databases',
+export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
+  databases: {
     name: 'Databases',
     icon: MemoTableIcon,
+    component: Databases,
   },
-  {
-    id: 'privileges',
+  privileges: {
     name: 'Privileges',
+    component: Privileges,
   },
-  {
-    id: 'export',
+  export: {
     name: 'Export',
   },
-  {
-    id: 'import',
+  import: {
     name: 'Import',
   },
-];
+};
 
-export const rightTabs: Tab[] = [
-  {
-    id: 'sql',
+export const rightTabs: TabsProps<HomeProps>['rightTabs'] = {
+  sql: {
     name: 'SQL',
   },
-];
+};

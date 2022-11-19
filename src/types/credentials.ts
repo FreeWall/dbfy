@@ -1,10 +1,6 @@
 export interface Credentials {
-  /** host */
-  h: string;
-  /** port */
-  p: number;
-  /** user */
-  u: string;
-  /** password */
-  pw?: string;
+  host: string;
+  port: number;
+  user: string;
+  pass?: string;
 }

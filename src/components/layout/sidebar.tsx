@@ -50,7 +50,7 @@ export default function Sidebar() {
     >
       <Header />
       <Server
-        server={session.credentials.h + ':' + session.credentials.p}
+        server={session.credentials.host + ':' + session.credentials.port}
         status="online"
       />
       <Database />

@@ -1,22 +1,23 @@
 import classNames from 'classnames';
+import React from 'react';
 
-export interface Tab {
-  id: string;
+export interface Tab<T> {
   name: string;
   icon?: React.ElementType;
+  component?: React.ElementType<T>;
 }
 
-export interface TabsProps {
+export interface TabsProps<T> {
+  pageProps: T;
   currentTab?: string;
-  leftTabs: Tab[];
-  rightTabs?: Tab[];
-  onTabClick: (tab: Tab) => void;
+  leftTabs: { [key: string]: Tab<T> };
+  rightTabs?: { [key: string]: Tab<T> };
+  onTabClick: (key: string) => void;
 }
 
-function Tab(props: Tab & { current: boolean; onClick: () => void }) {
+function Tab<T>(props: Tab<T> & { key: string; current: boolean; onClick: () => void }) {
   return (
     <div
-      key={props.id}
       className={classNames(
         'relative flex cursor-pointer items-center border border-l-0 border-dbfy-border bg-dbfy-input px-3 py-2 font-semibold first:border-l',
         {
@@ -39,34 +40,39 @@ function Tab(props: Tab & { current: boolean; onClick: () => void }) {
   );
 }
 
-export default function Tabs(props: TabsProps) {
+export default function Tabs<T>(props: TabsProps<T>) {
+  const CurrentTabComponent = props.currentTab ? props.leftTabs[props.currentTab]?.component : null;
+
   return (
-    <div>
-      <div className="flex justify-between">
-        <div className="flex">
-          {props.leftTabs.map((tab) => (
-            <Tab
-              key={tab.id}
-              current={props.currentTab == tab.id}
-              onClick={() => props.onTabClick(tab)}
-              {...tab}
-            />
-          ))}
-        </div>
-        {props.rightTabs && (
+    <>
+      <div>
+        <div className="flex justify-between">
           <div className="flex">
-            {props.rightTabs.map((tab) => (
+            {Object.entries(props.leftTabs).map(([key, tab]) => (
               <Tab
-                key={tab.id}
-                current={props.currentTab == tab.id}
+                key={key}
+                current={props.currentTab == key}
+                onClick={() => props.onTabClick(key)}
                 {...tab}
-                onClick={() => props.onTabClick(tab)}
               />
             ))}
           </div>
-        )}
+          {props.rightTabs && (
+            <div className="flex">
+              {Object.entries(props.rightTabs).map(([key, tab]) => (
+                <Tab
+                  key={key}
+                  current={props.currentTab == key}
+                  onClick={() => props.onTabClick(key)}
+                  {...tab}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="-mt-[1px] border-b border-b-dbfy-border"></div>
       </div>
-      <div className="-mt-[1px] border-b border-b-dbfy-border"></div>
-    </div>
+      <div>{CurrentTabComponent && <CurrentTabComponent {...props.pageProps} />}</div>
+    </>
   );
 }

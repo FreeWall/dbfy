@@ -1,25 +1,25 @@
-import Tabs, { Tab } from '@/components/ui/tabs';
-import { ReactElement } from 'react';
+import Tabs, { TabsProps } from '@/components/ui/tabs';
 import Breadcrumbs, { BreadcrumbsProps } from './page/breadcrumbs';
 
-interface PageProps {
+interface PageProps<T> {
+  pageProps: T;
   breadcrumbs: BreadcrumbsProps['breadcrumbs'];
   tabs: {
     currentTab: string;
-    leftTabs: Tab[];
-    rightTabs?: Tab[];
+    leftTabs: TabsProps<T>['leftTabs'];
+    rightTabs?: TabsProps<T>['rightTabs'];
   };
-  children: ReactElement;
 }
 
-export default function Page(props: PageProps) {
+export default function Page<T>(props: PageProps<T>) {
   return (
-    <div className="px-6 py-5">
+    <div className="px-6">
       <div>
         <Breadcrumbs breadcrumbs={props.breadcrumbs} />
       </div>
       <div className="pt-5">
         <Tabs
+          pageProps={props.pageProps}
           currentTab={props.tabs.currentTab}
           leftTabs={props.tabs.leftTabs}
           rightTabs={props.tabs.rightTabs}

@@ -10,16 +10,18 @@ export interface BreadcrumbsProps {
 
 export default function Breadcrumbs(props: BreadcrumbsProps) {
   return (
-    <div className="flex">
+    <div className="flex pt-4">
       {props.breadcrumbs.map((breadcrumb, idx) => (
         <div
           key={idx}
           className="mr-2 flex"
         >
           <Link href={breadcrumb.link}>
-            <a className="cursor-pointer hover:text-dbfy-link-color hover:underline">{breadcrumb.name}</a>
+            <a className="inline cursor-pointer py-[2px] hover:text-dbfy-link-color hover:underline">
+              {breadcrumb.name}
+            </a>
           </Link>
-          {idx < props.breadcrumbs.length - 1 && <div className="ml-2">{'>'}</div>}
+          {idx < props.breadcrumbs.length - 1 && <div className="ml-2 py-[2px]">{'>'}</div>}
         </div>
       ))}
     </div>

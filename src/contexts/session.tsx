@@ -10,9 +10,9 @@ interface SessionContextData {
 export const SessionContext = createContext<SessionContextData>({
   authenticated: false,
   credentials: {
-    h: '',
-    p: 3306,
-    u: '',
+    host: '',
+    port: 3306,
+    user: '',
   },
 });
 
@@ -29,9 +29,9 @@ export function SessionProvider(props: { session: IronSessionData; children: Rea
         authenticated: !!credentials,
         ...(!!credentials && {
           credentials: {
-            h: credentials.h,
-            p: credentials.p,
-            u: credentials.u,
+            host: credentials.host,
+            port: credentials.port,
+            user: credentials.user,
           },
         }),
       }}

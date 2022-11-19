@@ -8,7 +8,7 @@ import { ReactElement } from 'react';
 import Layout from '../components/layout';
 import { leftTabs, rightTabs } from './index/tabs';
 
-interface HomeProps {
+export interface HomeProps {
   databases: string[];
 }
 
@@ -23,11 +23,12 @@ export default function Home(props: HomeProps) {
         <title>dbfy</title>
       </Head>
       <Page
+        pageProps={props}
         breadcrumbs={[
           {
             name: (
               <>
-                Server: <b>{session.credentials.h}</b>
+                Server: <b>{session.credentials.host + ':' + session.credentials.port}</b>
               </>
             ),
             link: '/',
@@ -46,13 +47,7 @@ export default function Home(props: HomeProps) {
           leftTabs,
           rightTabs,
         }}
-      >
-        <div>
-          {props.databases.map((database, idx) => (
-            <div key={idx}>{database}</div>
-          ))}
-        </div>
-      </Page>
+      />
     </>
   );
 }

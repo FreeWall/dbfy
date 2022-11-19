@@ -17,10 +17,10 @@ export default router({
       const hostParts = input.server.split(':');
 
       const credentials: Credentials = {
-        h: hostParts[0] as string,
-        p: (hostParts[1] ?? 3306) as number,
-        u: input.username,
-        pw: input.password,
+        host: hostParts[0] as string,
+        port: (hostParts[1] ?? 3306) as number,
+        user: input.username,
+        pass: input.password,
       };
 
       try {

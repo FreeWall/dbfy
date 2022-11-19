@@ -12,6 +12,7 @@ interface TextField {
   name: string;
   type: TextInputProps['type'];
   placeholder?: string;
+  value?: string;
   ref: RefObject<HTMLInputElement>;
 }
 
@@ -24,11 +25,13 @@ export default function Login() {
       name: 'Server',
       type: 'text',
       placeholder: 'localhost',
+      value: 'mysql-rfam-public.ebi.ac.uk:4497',
       ref: useRef<HTMLInputElement>(null),
     },
     username: {
       name: 'Username',
       type: 'text',
+      value: 'rfamro',
       ref: useRef<HTMLInputElement>(null),
     },
     password: {
@@ -81,6 +84,7 @@ export default function Login() {
                       ref={field.ref}
                       type="text"
                       placeholder={field.placeholder}
+                      value={field.value}
                     />
                   </div>
                 </div>
@@ -97,12 +101,6 @@ export default function Login() {
             {login.isLoading && <div>loading...</div>}
             {login.data?.status == 'failed' && <div>failed, try again</div>}
           </div>
-          <div className="mt-10 opacity-60">
-            <div>Example (public DB):</div>
-            <br />
-            <div>mysql-rfam-public.ebi.ac.uk:4497</div>
-            <div>rfamro</div>
-          </div>
         </div>
       </div>
     </>
@@ -116,6 +114,7 @@ Login.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps: GetServerSideProps = withSession(({ req, res }) => {
   if (req.session.crs) {
     return {
+      props: {},
       redirect: {
         destination: '/',
       },

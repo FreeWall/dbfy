@@ -3,10 +3,10 @@ import { CustomSequelize } from './sequelize';
 
 export async function getSequelize(credentials: Credentials) {
   const sequelize = new CustomSequelize({
-    host: credentials.h,
-    port: credentials.p,
-    username: credentials.u,
-    password: credentials.pw,
+    host: credentials.host,
+    port: credentials.port,
+    username: credentials.user,
+    password: credentials.pass,
     dialect: 'mysql',
     dialectOptions: {
       connectTimeout: 3000,
