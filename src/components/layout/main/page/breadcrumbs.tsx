@@ -17,7 +17,7 @@ export default function Breadcrumbs(props: BreadcrumbsProps) {
           className="mr-2 flex"
         >
           <Link href={breadcrumb.link}>
-            <div>{breadcrumb.name}</div>
+            <a className="cursor-pointer hover:text-dbfy-link-color hover:underline">{breadcrumb.name}</a>
           </Link>
           {idx < props.breadcrumbs.length - 1 && <div className="ml-2">{'>'}</div>}
         </div>

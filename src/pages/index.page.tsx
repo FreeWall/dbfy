@@ -33,11 +33,11 @@ export default function Home(props: HomeProps) {
             link: '/',
           },
           {
-            name: 'Database',
-            link: '/',
-          },
-          {
-            name: 'Table',
+            name: (
+              <>
+                Database: <b>realcraft</b>
+              </>
+            ),
             link: '/',
           },
         ]}

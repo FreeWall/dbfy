@@ -16,6 +16,7 @@ module.exports = {
       'dbfy-input': '#f3f5f9',
       'dbfy-input-hover': '#e8eaed',
       'dbfy-sidebar': '#e8eef2',
+      'dbfy-link-color': '#0074CC',
       white: '#ffffff',
     },
   },
