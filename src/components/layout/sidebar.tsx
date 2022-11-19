@@ -1,10 +1,10 @@
 import { useSession } from '@/contexts/session';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import { Resizable } from 're-resizable';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import styles from './sidebar.module.css';
 import Database from './sidebar/database';
 import Header from './sidebar/header';
@@ -16,7 +16,7 @@ export default function Sidebar() {
   const [size, setSize] = useLocalStorage('size', 240);
   const [isResizing, setIsResizing] = useState(false);
 
-  const { data } = useQuery('neco', async () => {
+  const { data } = useQuery(['tables'], async () => {
     const res = await fetch('/tables.json');
     return res.json();
   });

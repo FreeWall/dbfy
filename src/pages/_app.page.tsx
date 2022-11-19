@@ -5,32 +5,28 @@ import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import { IronSession } from 'iron-session';
 import type { AppType } from 'next/app';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import superjson from 'superjson';
 import '../styles/globals.css';
-
-const queryClient = new QueryClient();
 
 const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        {getLayout(
-          <Component
-            session={session}
-            {...pageProps}
-          />,
-        )}
-      </QueryClientProvider>
+      {getLayout(
+        <Component
+          session={session}
+          {...pageProps}
+        />,
+        pageProps,
+      )}
     </SessionProvider>
   );
 };
 
 export default withTRPC<TrpcRouter>({
   config({ ctx }) {
-    const url = 'http://localhost:' + (process.env.PORT ?? 3010) + '/api/trpc';
+    const url = 'http://' + process.env.NEXT_PUBLIC_APP_DOMAIN + ':' + (process.env.PORT ?? 3010) + '/api/trpc';
 
     return {
       links: [

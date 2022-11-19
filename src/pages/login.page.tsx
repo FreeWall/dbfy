@@ -1,7 +1,9 @@
 import Layout from '@/components/layout';
-import TextInput, { TextInputProps } from '@/components/ui/TextInput';
+import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
+import { withSession } from '@/server/session/common';
 import { trpc } from '@/utils/trpc';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ReactElement, RefObject, useRef } from 'react';
@@ -110,3 +112,17 @@ export default function Login() {
 Login.getLayout = function getLayout(page: ReactElement) {
   return <Layout noSidebar={true}>{page}</Layout>;
 };
+
+export const getServerSideProps: GetServerSideProps = withSession(({ req, res }) => {
+  if (req.session.crs) {
+    return {
+      redirect: {
+        destination: '/',
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+});

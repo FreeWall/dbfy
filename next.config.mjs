@@ -24,6 +24,6 @@ export default function next(stage) {
       locales: ['en'],
       defaultLocale: 'en',
     },
-
+    pageExtensions: ['page.tsx', 'page.ts'],
   });
 }

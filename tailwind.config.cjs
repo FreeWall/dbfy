@@ -14,6 +14,7 @@ module.exports = {
       'dbfy-light-icon': '#9facb4',
       'dbfy-border': '#c6d2db',
       'dbfy-input': '#f3f5f9',
+      'dbfy-input-hover': '#e8eaed',
       'dbfy-sidebar': '#e8eef2',
       white: '#ffffff',
     },

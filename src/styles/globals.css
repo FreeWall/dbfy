@@ -14,6 +14,10 @@ body {
   height: 100%;
 }
 
+b, strong {
+  font-weight: 600;
+}
+
 #__next {
   height: 100%;
 }
