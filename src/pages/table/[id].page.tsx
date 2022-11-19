@@ -1,3 +1,4 @@
+import { withSession } from '@/server/session/common';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
@@ -22,10 +23,11 @@ Table.getLayout = function getLayout(page: ReactElement) {
 
 export default Table;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = withSession(async ({ req, res, params }) => {
   return {
     props: {
-      table: context.params?.id,
+      session: req.session,
+      table: params?.id,
     },
   };
-};
+});

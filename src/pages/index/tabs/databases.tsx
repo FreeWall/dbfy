@@ -1,4 +1,4 @@
-import { HomeProps } from '@/pages/index.page';
+import { HomeProps } from '../[...index].page';
 
 export default function Databases(props: HomeProps) {
   return (

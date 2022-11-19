@@ -26,7 +26,7 @@ const MyApp: AppType<{ session: IronSession }> = ({ Component, pageProps: { sess
 
 export default withTRPC<TrpcRouter>({
   config({ ctx }) {
-    const url = 'http://' + process.env.NEXT_PUBLIC_APP_DOMAIN + ':' + (process.env.PORT ?? 3010) + '/api/trpc';
+    const url = '/api/trpc';
 
     return {
       links: [

@@ -1,15 +1,16 @@
 import { TabsProps } from '@/components/ui/tabs';
 import { memo } from 'react';
-import { HomeProps } from '../index.page';
 import TableIcon from './../../components/icons/table.svg';
 import Databases from './tabs/databases';
 import Privileges from './tabs/privileges';
+import { HomeProps } from './[...index].page';
 const MemoTableIcon = memo(TableIcon);
 
 export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
   databases: {
     name: 'Databases',
     icon: MemoTableIcon,
+    link: '/index/databases',
     component: Databases,
   },
   privileges: {

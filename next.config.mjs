@@ -20,10 +20,15 @@ export default function next(stage) {
     reactStrictMode: true,
     swcMinify: true,
     // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
-    i18n: {
-      locales: ['en'],
-      defaultLocale: 'en',
-    },
     pageExtensions: ['page.tsx', 'page.ts'],
+    async redirects() {
+      return [
+        {
+          source: '/index',
+          destination: '/',
+          permanent: false,
+        },
+      ];
+    },
   });
 }

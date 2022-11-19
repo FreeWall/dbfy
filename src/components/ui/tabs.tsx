@@ -1,9 +1,11 @@
 import classNames from 'classnames';
-import React from 'react';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
 
 export interface Tab<T> {
   name: string;
   icon?: React.ElementType;
+  link?: string;
   component?: React.ElementType<T>;
 }
 
@@ -16,7 +18,11 @@ export interface TabsProps<T> {
 }
 
 function Tab<T>(props: Tab<T> & { key: string; current: boolean; onClick: () => void }) {
-  return (
+  const getElement = props.link
+    ? (tab: ReactElement) => <Link href={props.link as string}>{tab}</Link>
+    : (tab: ReactElement) => tab;
+
+  return getElement(
     <div
       className={classNames(
         'relative flex cursor-pointer items-center border border-l-0 border-dbfy-border bg-dbfy-input px-3 py-2 font-semibold first:border-l',
@@ -36,7 +42,7 @@ function Tab<T>(props: Tab<T> & { key: string; current: boolean; onClick: () => 
         </div>
       )}
       <div>{props.name}</div>
-    </div>
+    </div>,
   );
 }
 
