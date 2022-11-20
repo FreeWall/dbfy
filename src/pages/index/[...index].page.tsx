@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<Hom
       props: {
         session: req.session,
         currentTab,
-        ...(await leftTabs[currentTab]?.component?.getServerSideProps?.({ req: req })),
+        ...(await leftTabs[currentTab]?.page?.getServerSideProps?.({ req: req })),
       },
     };
   },

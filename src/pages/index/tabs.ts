@@ -11,12 +11,12 @@ export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
     name: 'Databases',
     icon: MemoTableIcon,
     link: '/index/databases',
-    component: Databases,
+    page: Databases,
   },
   privileges: {
     name: 'Privileges',
     link: '/index/privileges',
-    component: Privileges,
+    page: Privileges,
   },
   export: {
     name: 'Export',

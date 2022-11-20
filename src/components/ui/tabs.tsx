@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 
-export type TabComponent<P = any> = React.ElementType<P> & {
+export type TabPage<P = any> = React.ElementType<P> & {
   getServerSideProps?: (context: any) => Promise<{ [key: string]: any } | undefined>;
 };
 
@@ -10,7 +10,7 @@ export interface Tab {
   name: string;
   icon?: React.ElementType;
   link?: string;
-  component?: TabComponent;
+  page?: TabPage;
 }
 
 export interface TabsProps<T> {
@@ -51,7 +51,7 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
 }
 
 export default function Tabs<T>(props: TabsProps<T>) {
-  const CurrentTabComponent = props.currentTab ? props.leftTabs[props.currentTab]?.component : null;
+  const CurrentTabComponent = props.currentTab ? props.leftTabs[props.currentTab]?.page : null;
 
   return (
     <>
