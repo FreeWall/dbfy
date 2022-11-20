@@ -4,8 +4,8 @@ import { withSession } from '@/server/session/common';
 import { getSessionStore } from '@/server/session/store';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { ReactElement } from 'react';
 import Layout from '../../components/layout';
+import { CustomNextPage } from '../_app.page';
 import { leftTabs, rightTabs } from './tabs';
 
 export interface HomeProps {
@@ -14,7 +14,7 @@ export interface HomeProps {
 
 const DEFAULT_TAB = 'databases';
 
-export default function Home(props: HomeProps) {
+const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
   const session = useSession();
 
   return (
@@ -31,7 +31,7 @@ export default function Home(props: HomeProps) {
                 Server: <b>{session.credentials.host + ':' + session.credentials.port}</b>
               </>
             ),
-            link: '/index',
+            link: '/login',
           },
           {
             name: (
@@ -50,11 +50,13 @@ export default function Home(props: HomeProps) {
       />
     </>
   );
-}
+};
 
-Home.getLayout = function getLayout(page: ReactElement, props: HomeProps) {
+Home.getLayout = (page, props) => {
   return <Layout {...props}>{page}</Layout>;
 };
+
+export default Home;
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(
   async ({ req, res, params }) => {

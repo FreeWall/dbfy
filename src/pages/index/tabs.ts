@@ -3,6 +3,7 @@ import { memo } from 'react';
 import TableIcon from './../../components/icons/table.svg';
 import Databases from './tabs/databases';
 import Privileges from './tabs/privileges';
+import Sql from './tabs/sql';
 import { HomeProps } from './[...index].page';
 const MemoTableIcon = memo(TableIcon);
 
@@ -29,5 +30,7 @@ export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
 export const rightTabs: TabsProps<HomeProps>['rightTabs'] = {
   sql: {
     name: 'SQL',
+    link: '/index/sql',
+    page: Sql,
   },
 };

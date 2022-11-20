@@ -10,6 +10,11 @@ export const contentLinesPlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
+      if (update.view.state.doc.lines < 3) {
+        this.decorations = RangeSet.empty;
+        return;
+      }
+
       const line = update.view.state.doc.line(3);
 
       const stripe = Decoration.line({

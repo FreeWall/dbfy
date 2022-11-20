@@ -6,7 +6,8 @@ import { trpc } from '@/utils/trpc';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { ReactElement, RefObject, useRef } from 'react';
+import { RefObject, useRef } from 'react';
+import { CustomNextPage } from './_app.page';
 
 interface TextField {
   name: string;
@@ -16,7 +17,7 @@ interface TextField {
   ref: RefObject<HTMLInputElement>;
 }
 
-export default function Login() {
+const Login: CustomNextPage = () => {
   const login = trpc.login.useMutation();
   const router = useRouter();
 
@@ -54,7 +55,7 @@ export default function Login() {
   }
 
   if (login.data?.status == 'success') {
-    router.push('/');
+    router.reload();
   }
 
   return (
@@ -105,18 +106,20 @@ export default function Login() {
       </div>
     </>
   );
-}
+};
 
-Login.getLayout = function getLayout(page: ReactElement) {
+Login.getLayout = (page) => {
   return <Layout noSidebar={true}>{page}</Layout>;
 };
+
+export default Login;
 
 export const getServerSideProps: GetServerSideProps = withSession(({ req, res }) => {
   if (req.session.crs) {
     return {
-      props: {},
       redirect: {
-        destination: '/',
+        destination: '/login',
+        permanent: false,
       },
     };
   }
