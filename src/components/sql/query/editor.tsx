@@ -7,7 +7,7 @@ import { contentLinesPlugin } from './editor/plugins/contentLines';
 import { gutterLinesPlugin } from './editor/plugins/gutterLines';
 
 interface SqlQueryEditorProps {
-  query: SqlQuery;
+  query?: SqlQuery;
 }
 
 export default function SqlQueryEditor(props: SqlQueryEditorProps) {
@@ -17,7 +17,7 @@ export default function SqlQueryEditor(props: SqlQueryEditorProps) {
   return (
     <div className="w-full">
       <ReactCodeMirror
-        value={props.query.value}
+        value={props.query?.value}
         basicSetup={{
           foldGutter: false,
           lineNumbers: false,

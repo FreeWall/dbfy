@@ -9,13 +9,13 @@ import Layout from '../../components/layout';
 import { leftTabs, rightTabs } from './tabs';
 
 export interface HomeProps {
-  databases: string[];
+  currentTab: string;
 }
+
+const DEFAULT_TAB = 'databases';
 
 export default function Home(props: HomeProps) {
   const session = useSession();
-
-  const currentTab = 'databases';
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function Home(props: HomeProps) {
           },
         ]}
         tabs={{
-          currentTab,
+          currentTab: props.currentTab,
           leftTabs,
           rightTabs,
         }}
@@ -58,6 +58,8 @@ Home.getLayout = function getLayout(page: ReactElement, props: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(
   async ({ req, res, params }) => {
+    const currentTab = (params?.index as string) ?? DEFAULT_TAB;
+
     const sequelize = getSessionStore(req.session).sequelize;
 
     if (!sequelize) {
@@ -69,7 +71,8 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<Hom
     return {
       props: {
         session: req.session,
-        databases: await sequelize.getDatabases(),
+        currentTab,
+        ...(await leftTabs[currentTab]?.component?.getServerSideProps?.({ req: req })),
       },
     };
   },

@@ -15,6 +15,7 @@ export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
   },
   privileges: {
     name: 'Privileges',
+    link: '/index/privileges',
     component: Privileges,
   },
   export: {

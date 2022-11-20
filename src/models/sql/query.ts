@@ -5,6 +5,6 @@ export interface SqlQueryError {
 
 export interface SqlQuery {
   value: string;
-  elapsedMs?: number;
+  timing?: number;
   errors?: SqlQueryError[];
 }

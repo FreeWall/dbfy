@@ -2,22 +2,26 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 
-export interface Tab<T> {
+export type TabComponent<P = any> = React.ElementType<P> & {
+  getServerSideProps?: (context: any) => Promise<{ [key: string]: any } | undefined>;
+};
+
+export interface Tab {
   name: string;
   icon?: React.ElementType;
   link?: string;
-  component?: React.ElementType<T>;
+  component?: TabComponent;
 }
 
 export interface TabsProps<T> {
   pageProps: T;
-  currentTab?: string;
-  leftTabs: { [key: string]: Tab<T> };
-  rightTabs?: { [key: string]: Tab<T> };
+  currentTab: string;
+  leftTabs: { [key: string]: Tab };
+  rightTabs?: { [key: string]: Tab };
   onTabClick: (key: string) => void;
 }
 
-function Tab<T>(props: Tab<T> & { key: string; current: boolean; onClick: () => void }) {
+function TabButton(props: Tab & { key: string; current: boolean; onClick: () => void }) {
   const getElement = props.link
     ? (tab: ReactElement) => <Link href={props.link as string}>{tab}</Link>
     : (tab: ReactElement) => tab;
@@ -55,7 +59,7 @@ export default function Tabs<T>(props: TabsProps<T>) {
         <div className="flex justify-between">
           <div className="flex">
             {Object.entries(props.leftTabs).map(([key, tab]) => (
-              <Tab
+              <TabButton
                 key={key}
                 current={props.currentTab == key}
                 onClick={() => props.onTabClick(key)}
@@ -66,7 +70,7 @@ export default function Tabs<T>(props: TabsProps<T>) {
           {props.rightTabs && (
             <div className="flex">
               {Object.entries(props.rightTabs).map(([key, tab]) => (
-                <Tab
+                <TabButton
                   key={key}
                   current={props.currentTab == key}
                   onClick={() => props.onTabClick(key)}

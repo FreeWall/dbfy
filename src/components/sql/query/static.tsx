@@ -14,6 +14,6 @@ export default function SqlQueryStatic(props: SqlQueryStaticProps) {
     <div
       className="font-mono text-xs leading-[1.4em]"
       dangerouslySetInnerHTML={{ __html: Prism.highlight(query, Prism.languages['sql'] as Grammar, 'sql') }}
-    ></div>
+    />
   );
 }
