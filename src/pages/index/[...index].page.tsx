@@ -6,7 +6,7 @@ import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
 import { CustomNextPage } from '../_app.page';
-import { leftTabs, rightTabs } from './tabs';
+import { tabs } from './tabs';
 
 export interface HomeProps {
   currentTab: string;
@@ -44,8 +44,7 @@ const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
         ]}
         tabs={{
           currentTab: props.currentTab,
-          leftTabs,
-          rightTabs,
+          tabs: tabs,
         }}
       />
     </>
@@ -74,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<Hom
       props: {
         session: req.session,
         currentTab,
-        ...(await leftTabs[currentTab]?.page?.getServerSideProps?.({ req: req })),
+        ...(await tabs[currentTab]?.component?.getServerSideProps?.({ req: req })),
       },
     };
   },

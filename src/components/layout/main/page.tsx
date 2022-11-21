@@ -6,8 +6,7 @@ interface PageProps<T> {
   breadcrumbs: BreadcrumbsProps['breadcrumbs'];
   tabs: {
     currentTab: string;
-    leftTabs: TabsProps<T>['leftTabs'];
-    rightTabs?: TabsProps<T>['rightTabs'];
+    tabs: TabsProps<T>['tabs'];
   };
 }
 
@@ -21,8 +20,7 @@ export default function Page<T>(props: PageProps<T>) {
         <Tabs
           pageProps={props.pageProps}
           currentTab={props.tabs.currentTab}
-          leftTabs={props.tabs.leftTabs}
-          rightTabs={props.tabs.rightTabs}
+          tabs={props.tabs.tabs}
           onTabClick={(tab) => {
             console.log('onTabClick', tab);
           }}

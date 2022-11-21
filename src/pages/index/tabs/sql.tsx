@@ -1,5 +1,5 @@
 import SqlQueryEditor from '@/components/sql/query/editor';
-import { TabPage } from '@/components/ui/tabs';
+import { TabComponent } from '@/components/ui/tabs';
 import { SqlQuery } from '@/models/sql/query';
 
 const query: SqlQuery = {
@@ -10,7 +10,7 @@ ORDER BY cat_id ASC;\n\n\
 DECLARE { @VARIABLE data_type [ = value ] }; -- some comment",
 };
 
-const Sql: TabPage = () => {
+const Sql: TabComponent = () => {
   return (
     <div className="mt-5">
       <SqlQueryEditor query={query} />

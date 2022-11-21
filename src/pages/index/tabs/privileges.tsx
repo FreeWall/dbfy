@@ -1,6 +1,6 @@
-import { TabPage } from '@/components/ui/tabs';
+import { TabComponent } from '@/components/ui/tabs';
 
-const Privileges: TabPage = () => {
+const Privileges: TabComponent = () => {
   return <div className="mt-5">privileges</div>;
 };
 

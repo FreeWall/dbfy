@@ -7,30 +7,33 @@ import Sql from './tabs/sql';
 import { HomeProps } from './[...index].page';
 const MemoTableIcon = memo(TableIcon);
 
-export const leftTabs: TabsProps<HomeProps>['leftTabs'] = {
+export const tabs: TabsProps<HomeProps>['tabs'] = {
   databases: {
     name: 'Databases',
-    icon: MemoTableIcon,
     link: '/index/databases',
-    page: Databases,
+    icon: MemoTableIcon,
+    component: Databases,
+    type: 'left',
   },
   privileges: {
     name: 'Privileges',
     link: '/index/privileges',
-    page: Privileges,
+    icon: MemoTableIcon,
+    component: Privileges,
+    type: 'left',
   },
   export: {
     name: 'Export',
+    type: 'left',
   },
   import: {
     name: 'Import',
+    type: 'left',
   },
-};
-
-export const rightTabs: TabsProps<HomeProps>['rightTabs'] = {
   sql: {
     name: 'SQL',
     link: '/index/sql',
-    page: Sql,
+    component: Sql,
+    type: 'right',
   },
 };

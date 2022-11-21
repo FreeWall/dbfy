@@ -2,22 +2,22 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 
-export type TabPage<P = any> = React.ElementType<P> & {
+export type TabComponent<P = any> = React.ElementType<P> & {
   getServerSideProps?: (context: any) => Promise<{ [key: string]: any } | undefined>;
 };
 
 export interface Tab {
   name: string;
+  type: 'left' | 'right';
   icon?: React.ElementType;
   link?: string;
-  page?: TabPage;
+  component?: TabComponent;
 }
 
 export interface TabsProps<T> {
   pageProps: T;
   currentTab: string;
-  leftTabs: { [key: string]: Tab };
-  rightTabs?: { [key: string]: Tab };
+  tabs: { [key: string]: Tab };
   onTabClick: (key: string) => void;
 }
 
@@ -51,14 +51,17 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
 }
 
 export default function Tabs<T>(props: TabsProps<T>) {
-  const CurrentTabComponent = props.leftTabs[props.currentTab]?.page || props.rightTabs?.[props.currentTab]?.page;
+  const CurrentTabComponent = props.tabs[props.currentTab]?.component;
+
+  const leftTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'left');
+  const rightTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'right');
 
   return (
     <>
       <div>
         <div className="flex justify-between">
           <div className="flex">
-            {Object.entries(props.leftTabs).map(([key, tab]) => (
+            {leftTabs.map(([key, tab]) => (
               <TabButton
                 key={key}
                 current={props.currentTab == key}
@@ -67,9 +70,9 @@ export default function Tabs<T>(props: TabsProps<T>) {
               />
             ))}
           </div>
-          {props.rightTabs && (
+          {rightTabs.length && (
             <div className="flex">
-              {Object.entries(props.rightTabs).map(([key, tab]) => (
+              {rightTabs.map(([key, tab]) => (
                 <TabButton
                   key={key}
                   current={props.currentTab == key}

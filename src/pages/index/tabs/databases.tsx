@@ -1,11 +1,11 @@
-import { TabPage } from '@/components/ui/tabs';
+import { TabComponent } from '@/components/ui/tabs';
 import { getSessionStore } from '@/server/session/store';
 
 interface DatabasesProps {
   databases: string[];
 }
 
-const Databases: TabPage = (props: DatabasesProps) => {
+const Databases: TabComponent = (props: DatabasesProps) => {
   return (
     <div className="mt-5">
       <div>
