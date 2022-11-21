@@ -1,4 +1,4 @@
-import { getSequelize } from '@/server/sequelize/getSequelize';
+import { initSequelize } from '@/server/sequelize/initSequelize';
 import { Credentials } from '@/types/credentials';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
@@ -24,7 +24,7 @@ export default router({
       };
 
       try {
-        await getSequelize(credentials);
+        await initSequelize(credentials);
       } catch (error) {
         return {
           status: 'failed',

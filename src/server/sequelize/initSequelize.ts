@@ -1,7 +1,7 @@
 import { Credentials } from '@/types/credentials';
 import { CustomSequelize } from './sequelize';
 
-export async function getSequelize(credentials: Credentials) {
+export async function initSequelize(credentials: Credentials) {
   const sequelize = new CustomSequelize({
     host: credentials.host,
     port: credentials.port,

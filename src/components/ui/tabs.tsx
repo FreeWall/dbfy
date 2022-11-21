@@ -51,8 +51,7 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
 }
 
 export default function Tabs<T>(props: TabsProps<T>) {
-  const CurrentTabComponent =
-    (props.currentTab ? props.leftTabs[props.currentTab]?.page : null) ?? props.rightTabs?.[props.currentTab]?.page;
+  const CurrentTabComponent = props.leftTabs[props.currentTab]?.page || props.rightTabs?.[props.currentTab]?.page;
 
   return (
     <>

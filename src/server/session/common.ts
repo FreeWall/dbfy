@@ -2,7 +2,7 @@ import { Credentials } from '@/types/credentials';
 import * as http from 'http';
 import { getIronSession } from 'iron-session';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { getSequelize } from '../sequelize/getSequelize';
+import { initSequelize } from '../sequelize/initSequelize';
 import { sessionOptions } from './options';
 import { getSessionStore } from './store';
 
@@ -20,7 +20,7 @@ export function withSession<P extends { [key: string]: any } = { [key: string]: 
 
     if (!store.sequelize) {
       try {
-        store.sequelize = await getSequelize(session.crs);
+        store.sequelize = await initSequelize(session.crs);
       } catch (error) {
         session.destroy();
       }
