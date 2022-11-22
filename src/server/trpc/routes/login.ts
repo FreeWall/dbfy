@@ -23,13 +23,7 @@ export default router({
         pass: input.password,
       };
 
-      try {
-        await initSequelize(credentials);
-      } catch (error) {
-        return {
-          status: 'failed',
-        };
-      }
+      await initSequelize(credentials);
 
       ctx.session.id = nanoid(8);
       ctx.session.crs = credentials;

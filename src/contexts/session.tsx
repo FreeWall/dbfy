@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext } from 'react';
 
 interface SessionContextData {
   authenticated: boolean;
-  credentials: Omit<Credentials, 'pw'>;
+  credentials: Omit<Credentials, 'pass'>;
 }
 
 export const SessionContext = createContext<SessionContextData>({

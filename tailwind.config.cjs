@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        spin: 'spin 0.8s linear infinite',
+      },
+    },
     screens: {
       md: { max: '767px' },
       sm: { max: '639px' },
@@ -16,7 +20,8 @@ module.exports = {
       'dbfy-input': '#f3f5f9',
       'dbfy-input-hover': '#e8eaed',
       'dbfy-sidebar': '#e8eef2',
-      'dbfy-link': '#0074CC',
+      'dbfy-link': '#0074cc',
+      'dbfy-focus': '#2a9ce8',
       white: '#ffffff',
     },
   },

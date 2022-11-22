@@ -1,4 +1,5 @@
 import Layout from '@/components/layout';
+import Spinner from '@/components/ui/spinner';
 import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
 import { withSession } from '@/server/session/common';
@@ -14,6 +15,7 @@ interface TextField {
   type: TextInputProps['type'];
   placeholder?: string;
   value?: string;
+  disabled?: boolean;
   ref: RefObject<HTMLInputElement>;
 }
 
@@ -83,7 +85,7 @@ const Login: CustomNextPage = () => {
                   <div>
                     <TextInput
                       ref={field.ref}
-                      type="text"
+                      type={field.type}
                       placeholder={field.placeholder}
                       value={field.value}
                     />
@@ -91,17 +93,25 @@ const Login: CustomNextPage = () => {
                 </div>
               ))}
             </div>
-            <div className="flex">
+            <div className="flex items-center">
               <div
                 className="cursor-pointer rounded-[3px] bg-dbfy-dark-icon py-2 px-4 font-semibold text-white hover:bg-dbfy-text"
                 onClick={onLogin}
               >
                 Login
               </div>
+              {(login.data?.status == 'success' || login.isLoading) && (
+                <div className="ml-4">
+                  <Spinner size={24} />
+                </div>
+              )}
             </div>
-            {login.isLoading && <div>loading...</div>}
-            {login.data?.status == 'failed' && <div>failed, try again</div>}
           </div>
+          {login.error && (
+            <div className="mt-5 rounded-md bg-[#FFEAE6] p-5 py-4 text-[#cc0000] shadow-[0_0_8px_#c6d2db]">
+              {login.error.message}
+            </div>
+          )}
         </div>
       </div>
     </>

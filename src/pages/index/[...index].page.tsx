@@ -12,8 +12,6 @@ export interface HomeProps {
   currentTab: string;
 }
 
-const DEFAULT_TAB = 'databases';
-
 const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
   const session = useSession();
 
@@ -29,14 +27,6 @@ const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
             name: (
               <>
                 Server: <b>{session.credentials.host + ':' + session.credentials.port}</b>
-              </>
-            ),
-            link: '/login',
-          },
-          {
-            name: (
-              <>
-                Database: <b>realcraft</b>
               </>
             ),
             link: '/',
@@ -57,24 +47,22 @@ Home.getLayout = (page, props) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(
-  async ({ req, res, params }) => {
-    const currentTab = (params?.index as string) ?? DEFAULT_TAB;
+export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(async (context) => {
+  const currentTab = (context.params?.index as string) ?? 'databases';
 
-    const sequelize = getSessionStore(req.session).sequelize;
+  const sequelize = getSessionStore(context.req.session).sequelize;
 
-    if (!sequelize) {
-      return {
-        notFound: true,
-      };
-    }
-
+  if (!sequelize) {
     return {
-      props: {
-        session: req.session,
-        currentTab,
-        ...(await tabs[currentTab]?.component?.getServerSideProps?.({ req: req })),
-      },
+      notFound: true,
     };
-  },
-);
+  }
+
+  return {
+    props: {
+      session: context.req.session,
+      currentTab,
+      ...(await tabs[currentTab]?.component?.getServerSideProps?.(context)),
+    },
+  };
+});

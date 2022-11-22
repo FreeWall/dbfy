@@ -1,9 +1,10 @@
 import classNames from 'classnames';
+import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 
-export type TabComponent<P = any> = React.ElementType<P> & {
-  getServerSideProps?: (context: any) => Promise<{ [key: string]: any } | undefined>;
+export type TabComponent = React.ElementType & {
+  getServerSideProps?: (context: GetServerSidePropsContext) => Promise<{ [key: string]: any } | undefined>;
 };
 
 export interface Tab {
