@@ -1,4 +1,6 @@
 import { initSequelize } from '@/server/sequelize/initSequelize';
+import { getSession } from '@/server/session/common';
+import { getSessionStore } from '@/server/session/store';
 import { Credentials } from '@/types/credentials';
 import { nanoid } from 'nanoid';
 import { z } from 'zod';
@@ -11,6 +13,7 @@ export default router({
         server: z.string().default('localhost:3306'),
         username: z.string(),
         password: z.string().optional(),
+        remember: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -23,11 +26,21 @@ export default router({
         pass: input.password,
       };
 
-      await initSequelize(credentials);
+      const sequelize = await initSequelize(credentials);
 
-      ctx.session.id = nanoid(8);
-      ctx.session.crs = credentials;
-      await ctx.session.save();
+      const session = await getSession(ctx.req, ctx.res, {
+        cookieOptions: {
+          maxAge: input.remember ? 30 * 86400 : undefined,
+          secure: process.env.NODE_ENV === 'production',
+        },
+      });
+
+      session.id = nanoid(8);
+      session.crs = credentials;
+      await session.save();
+
+      const store = getSessionStore(session);
+      store.sequelize = sequelize;
 
       return {
         status: 'success',

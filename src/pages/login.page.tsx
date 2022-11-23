@@ -1,5 +1,6 @@
 import Layout from '@/components/layout';
-import Spinner from '@/components/ui/spinner';
+import Button from '@/components/ui/button';
+import Checkbox from '@/components/ui/checkbox';
 import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
 import { withSession } from '@/server/session/common';
@@ -44,8 +45,14 @@ const Login: CustomNextPage = () => {
     },
   };
 
+  const rememberRef = useRef<HTMLInputElement>(null);
+
   function onLogin() {
     if (!fields.username?.ref.current?.value) {
+      return;
+    }
+
+    if (login.isLoading || login.data?.status == 'success') {
       return;
     }
 
@@ -53,6 +60,7 @@ const Login: CustomNextPage = () => {
       server: fields.server?.ref.current?.value,
       username: fields.username?.ref.current?.value,
       password: fields.password?.ref.current?.value,
+      remember: !!rememberRef.current?.checked,
     });
   }
 
@@ -93,18 +101,17 @@ const Login: CustomNextPage = () => {
                 </div>
               ))}
             </div>
-            <div className="flex items-center">
-              <div
-                className="cursor-pointer rounded-[3px] bg-dbfy-dark-icon py-2 px-4 font-semibold text-white hover:bg-dbfy-text"
+            <div className="flex items-center justify-between">
+              <Button
+                text="Login"
+                loading={login.data?.status == 'success' || login.isLoading}
                 onClick={onLogin}
-              >
-                Login
+              />
+              <div className="ml-5">
+                <Checkbox ref={rememberRef}>
+                  <div className="ml-2 inline-block cursor-pointer align-middle">Remember me</div>
+                </Checkbox>
               </div>
-              {(login.data?.status == 'success' || login.isLoading) && (
-                <div className="ml-4">
-                  <Spinner size={24} />
-                </div>
-              )}
             </div>
           </div>
           {login.error && (

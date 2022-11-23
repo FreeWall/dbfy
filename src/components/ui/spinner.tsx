@@ -12,6 +12,6 @@ export default function Spinner(props: SpinnerProps) {
         { 'h-8 w-8 border-[6px]': props.size == 32 },
         'animate-spin rounded-full border-dbfy-border border-t-dbfy-dark-icon',
       )}
-    ></div>
+    />
   );
 }

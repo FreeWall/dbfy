@@ -1,13 +1,17 @@
 import { Credentials } from '@/types/credentials';
 import * as http from 'http';
-import { getIronSession } from 'iron-session';
+import { getIronSession, IronSessionOptions } from 'iron-session';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initSequelize } from '../sequelize/initSequelize';
 import { sessionOptions } from './options';
 import { getSessionStore } from './store';
 
-export async function getSession(req: http.IncomingMessage | Request, res: http.ServerResponse | Response) {
-  return await getIronSession(req, res, sessionOptions);
+export async function getSession(
+  req: http.IncomingMessage | Request,
+  res: http.ServerResponse | Response,
+  options?: Partial<IronSessionOptions>,
+) {
+  return await getIronSession(req, res, { ...sessionOptions, ...options });
 }
 
 export function withSession<P extends { [key: string]: any } = { [key: string]: any }>(
