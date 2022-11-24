@@ -26,8 +26,8 @@ export const autocompletionPlugin = autocompletion({
 });
 
 function myCompletions(context: CompletionContext) {
-  let word = context.matchBefore(/\w*/);
-  if (word.from == word.to && !context.explicit) return null;
+  const word = context.matchBefore(/\w*/);
+  if (!word || (word.from == word.to && !context.explicit)) return null;
   return {
     from: word.from,
     options: [

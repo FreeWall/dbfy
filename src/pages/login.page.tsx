@@ -4,6 +4,7 @@ import Checkbox from '@/components/ui/checkbox';
 import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
 import { withSession } from '@/server/session/common';
+import { rememberExpirationDays } from '@/server/session/options';
 import { trpc } from '@/utils/trpc';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -82,7 +83,7 @@ const Login: CustomNextPage = () => {
               <span className="ml-1 hidden select-none text-xs font-semibold group-hover:inline">v{app.version}</span>
             </span>
           </div>
-          <div className="rounded-md bg-dbfy-input p-8 py-7 shadow-[0_0_8px_#c6d2db]">
+          <div className="rounded-md bg-dbfy-input p-8 py-7 shadow-[0_0_8px_theme(colors.dbfy-border)]">
             <div className="mb-6">
               {Object.values(fields).map((field, idx) => (
                 <div
@@ -109,13 +110,18 @@ const Login: CustomNextPage = () => {
               />
               <div className="ml-5">
                 <Checkbox ref={rememberRef}>
-                  <div className="ml-2 inline-block cursor-pointer align-middle">Remember me</div>
+                  <div
+                    className="ml-2 inline-block cursor-pointer align-middle leading-none"
+                    title={rememberExpirationDays + ' days of expiration'}
+                  >
+                    Remember me
+                  </div>
                 </Checkbox>
               </div>
             </div>
           </div>
           {login.error && (
-            <div className="mt-5 rounded-md bg-[#FFEAE6] p-5 py-4 text-[#cc0000] shadow-[0_0_8px_#c6d2db]">
+            <div className="mt-5 rounded-md bg-[#FFEAE6] p-5 py-4 text-[#cc0000] shadow-[0_0_8px_theme(colors.dbfy-border)]">
               {login.error.message}
             </div>
           )}

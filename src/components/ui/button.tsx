@@ -16,7 +16,7 @@ export default function Button(props: ButtonProps) {
     >
       <div className={classNames({ 'opacity-0': props.loading })}>{props.text}</div>
       {props.loading && (
-        <div className="absolute left-0 right-0 top-0 bottom-0 m-auto h-6 w-6 animate-spin rounded-full border-[5px] border-dbfy-light-icon border-t-white" />
+        <div className="absolute left-0 right-0 top-0 bottom-0 m-auto h-6 w-6 animate-spin rounded-full border-[4px] border-dbfy-dark-icon border-t-white" />
       )}
     </div>
   );

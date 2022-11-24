@@ -1,5 +1,6 @@
 import { initSequelize } from '@/server/sequelize/initSequelize';
 import { getSession } from '@/server/session/common';
+import { rememberExpirationDays } from '@/server/session/options';
 import { getSessionStore } from '@/server/session/store';
 import { Credentials } from '@/types/credentials';
 import { nanoid } from 'nanoid';
@@ -30,7 +31,7 @@ export default router({
 
       const session = await getSession(ctx.req, ctx.res, {
         cookieOptions: {
-          maxAge: input.remember ? 30 * 86400 : undefined,
+          maxAge: input.remember ? rememberExpirationDays * 86400 : undefined,
           secure: process.env.NODE_ENV === 'production',
         },
       });

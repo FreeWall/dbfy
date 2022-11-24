@@ -1,9 +1,7 @@
 import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu';
 import CogIcon from './../../../icons/cog.svg';
 
-interface DropdownMenuProps {}
-
-export default function DropdownMenu(props: DropdownMenuProps) {
+export default function DropdownMenu(props: any) {
   return (
     <RadixDropdownMenu.Root>
       <RadixDropdownMenu.Portal>

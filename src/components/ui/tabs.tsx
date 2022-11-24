@@ -52,7 +52,7 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
 }
 
 export default function Tabs<T>(props: TabsProps<T>) {
-  const CurrentTabComponent = props.tabs[props.currentTab]?.component;
+  const CurrentTabComponent = props.tabs[props.currentTab]?.component as React.ElementType;
 
   const leftTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'left');
   const rightTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'right');

@@ -1,9 +1,10 @@
 import { withSession } from '@/server/session/common';
-import type { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
+import { CustomNextPage } from '../_app.page';
 
-const Table: NextPage = (props) => {
+const Table: CustomNextPage = (props) => {
   return (
     <>
       <Head>
@@ -17,7 +18,7 @@ const Table: NextPage = (props) => {
   );
 };
 
-Table.getLayout = function getLayout(page: ReactElement) {
+Table.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };
 
