@@ -1,5 +1,4 @@
-import { nanoid } from 'nanoid';
-import { ForwardedRef, forwardRef, ReactElement } from 'react';
+import { ForwardedRef, forwardRef, ReactElement, useId } from 'react';
 
 export interface CheckboxProps {
   checked?: boolean;
@@ -8,7 +7,7 @@ export interface CheckboxProps {
 }
 
 export default forwardRef(function Checkbox(props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) {
-  const id = nanoid(4);
+  const id = useId();
 
   return (
     <>

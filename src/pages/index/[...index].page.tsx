@@ -2,10 +2,10 @@ import Page from '@/components/layout/main/page';
 import { useSession } from '@/contexts/session';
 import { withSession } from '@/server/session/common';
 import { getSessionStore } from '@/server/session/store';
+import { CustomNextPage } from '@/types/page';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
-import { CustomNextPage } from '../_app.page';
 import { tabs } from './tabs';
 
 export interface HomeProps {

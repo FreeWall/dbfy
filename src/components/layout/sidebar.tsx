@@ -8,8 +8,8 @@ import { useState } from 'react';
 import styles from './sidebar.module.css';
 import Database from './sidebar/database';
 import Header from './sidebar/header';
+import List from './sidebar/list';
 import Server from './sidebar/server';
-import Tables from './sidebar/tables';
 
 export default function Sidebar() {
   const session = useSession();
@@ -54,9 +54,9 @@ export default function Sidebar() {
         status="online"
       />
       <Database />
-      <Tables
-        tables={data ? data : []}
-        currentTable={(router.query.id as string) ?? undefined}
+      <List
+        items={data ? data : []}
+        currentItem={(router.query.id as string) ?? undefined}
       />
     </Resizable>
   );

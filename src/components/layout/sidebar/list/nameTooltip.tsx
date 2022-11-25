@@ -2,14 +2,14 @@ import { MouseEvent, useState } from 'react';
 
 let tooltipTimeout = 0;
 
-export function useTableNameTooltip(offsetTop?: number) {
+export function useNameTooltip(offsetTop?: number) {
   const [tooltip, setTooltip] = useState<{
-    table: string;
+    value: string;
     target: HTMLDivElement;
     visible: boolean;
   }>();
 
-  const TableNameTooltip = () => {
+  const NameTooltip = () => {
     if (!tooltip || !tooltip.visible) {
       return null;
     }
@@ -19,12 +19,12 @@ export function useTableNameTooltip(offsetTop?: number) {
         className="pointer-events-none fixed top-0 left-[44px] bg-dbfy-border pr-2 text-xs font-medium leading-[1.9em]"
         style={{ top: tooltip.target.offsetTop - (offsetTop ? offsetTop : 0) + 'px' }}
       >
-        {tooltip.table}
+        {tooltip.value}
       </div>
     );
   };
 
-  function onMouseEnter(event: MouseEvent<HTMLDivElement>, table: string) {
+  function onMouseEnter(event: MouseEvent<HTMLDivElement>, item: string) {
     if (tooltipTimeout) {
       clearTimeout(tooltipTimeout);
       tooltipTimeout = 0;
@@ -36,7 +36,7 @@ export function useTableNameTooltip(offsetTop?: number) {
 
     if (tooltip) {
       setTooltip({
-        table: table,
+        value: item,
         target: event.target as HTMLDivElement,
         visible: (event.target as HTMLDivElement).offsetWidth < (event.target as HTMLDivElement).scrollWidth,
       });
@@ -46,7 +46,7 @@ export function useTableNameTooltip(offsetTop?: number) {
     tooltipTimeout = window.setTimeout(() => {
       tooltipTimeout = 0;
       setTooltip({
-        table: table,
+        value: item,
         target: event.target as HTMLDivElement,
         visible: (event.target as HTMLDivElement).offsetWidth < (event.target as HTMLDivElement).scrollWidth,
       });
@@ -62,7 +62,7 @@ export function useTableNameTooltip(offsetTop?: number) {
   }
 
   return {
-    TableNameTooltip,
+    NameTooltip,
     tooltip,
     onMouseEnter,
     onMouseLeave,

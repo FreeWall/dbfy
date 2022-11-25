@@ -5,12 +5,12 @@ import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
 import { withSession } from '@/server/session/common';
 import { rememberExpirationDays } from '@/server/session/options';
+import { CustomNextPage } from '@/types/page';
 import { trpc } from '@/utils/trpc';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { RefObject, useRef } from 'react';
-import { CustomNextPage } from './_app.page';
 
 interface TextField {
   name: string;

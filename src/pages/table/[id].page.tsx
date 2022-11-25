@@ -1,8 +1,8 @@
 import { withSession } from '@/server/session/common';
+import { CustomNextPage } from '@/types/page';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
-import { CustomNextPage } from '../_app.page';
 
 const Table: CustomNextPage = (props) => {
   return (

@@ -15,7 +15,6 @@ export class CustomSequelize extends Sequelize {
       logging: (sql, timing) => {
         _query.timing = timing;
       },
-      benchmark: true,
     });
 
     return { data, query: _query };
@@ -40,7 +39,6 @@ export class CustomSequelize extends Sequelize {
     const tables = [];
     const data = await this.query<{ [key: string]: string }>('SHOW TABLES FROM ' + database, {
       type: QueryTypes.SELECT,
-      benchmark: true,
     });
 
     if (data) {

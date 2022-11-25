@@ -1,24 +1,11 @@
 import { SessionProvider } from '@/contexts/session';
 import { TrpcRouter } from '@/server/trpc/router';
+import { CustomAppProps } from '@/types/page';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
-import { IronSession } from 'iron-session';
-import type { AppProps } from 'next/app';
-import { ReactElement } from 'react';
 import superjson from 'superjson';
 import '../styles/globals.css';
-
-export type CustomNextPage<P = unknown> = AppProps<P>['Component'] & {
-  getLayout: (page: ReactElement, props: CustomAppProps<P>['pageProps']) => ReactElement;
-};
-
-type CustomAppProps<P = unknown> = AppProps<P> & {
-  pageProps: AppProps<P>['pageProps'] & {
-    session: IronSession;
-  };
-  Component: CustomNextPage;
-};
 
 const MyApp = ({ Component, pageProps }: CustomAppProps) => {
   const getLayout = Component.getLayout || ((page) => page);
