@@ -3,8 +3,8 @@ import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 
-export type TabComponent = React.ElementType & {
-  getServerSideProps?: (context: GetServerSidePropsContext) => Promise<{ [key: string]: any } | undefined>;
+export type TabComponent<T = unknown> = React.ElementType<T | undefined> & {
+  getServerSideProps?: (context: GetServerSidePropsContext) => Promise<T | undefined>;
 };
 
 export interface Tab {
@@ -12,7 +12,7 @@ export interface Tab {
   type: 'left' | 'right';
   icon?: React.ElementType;
   link?: string;
-  component?: TabComponent;
+  component?: TabComponent<any>;
 }
 
 export interface TabsProps<T> {

@@ -22,14 +22,6 @@ export const tabs: TabsProps<HomeProps>['tabs'] = {
     component: Privileges,
     type: 'left',
   },
-  export: {
-    name: 'Export',
-    type: 'left',
-  },
-  import: {
-    name: 'Import',
-    type: 'left',
-  },
   sql: {
     name: 'SQL',
     link: '/index/sql',

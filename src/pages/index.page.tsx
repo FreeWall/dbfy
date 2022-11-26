@@ -6,7 +6,6 @@ export default function Index() {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: {},
     redirect: {
       destination: '/index/databases',
       permanent: false,

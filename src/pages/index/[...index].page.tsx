@@ -1,8 +1,8 @@
 import Page from '@/components/layout/main/page';
-import { useSession } from '@/contexts/session';
-import { withSession } from '@/server/session/common';
+import { useSession } from '@/contexts/app';
+import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
-import { CustomNextPage } from '@/types/page';
+import { CustomNextPage } from '@/types/app';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Layout from '../../components/layout';
@@ -42,12 +42,12 @@ const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
 };
 
 Home.getLayout = (page, props) => {
-  return <Layout {...props}>{page}</Layout>;
+  return <Layout>{page}</Layout>;
 };
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<HomeProps>(async (context) => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = withAppContext<HomeProps>(async (context) => {
   const currentTab = (context.params?.index as string) ?? 'databases';
 
   const sequelize = getSessionStore(context.req.session).sequelize;
@@ -60,9 +60,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = withSession<Hom
 
   return {
     props: {
-      session: context.req.session,
       currentTab,
-      ...(await tabs[currentTab]?.component?.getServerSideProps?.(context)),
     },
   };
 });

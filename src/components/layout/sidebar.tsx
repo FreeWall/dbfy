@@ -1,8 +1,6 @@
-import { useSession } from '@/contexts/session';
+import { useDatabases, useSession } from '@/contexts/app';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
-import { useRouter } from 'next/router';
 import { Resizable } from 're-resizable';
 import { useState } from 'react';
 import styles from './sidebar.module.css';
@@ -16,12 +14,7 @@ export default function Sidebar() {
   const [size, setSize] = useLocalStorage('size', 240);
   const [isResizing, setIsResizing] = useState(false);
 
-  const { data } = useQuery(['tables'], async () => {
-    const res = await fetch('/tables.json');
-    return res.json();
-  });
-
-  const router = useRouter();
+  const databases = useDatabases();
 
   return (
     <Resizable
@@ -38,8 +31,8 @@ export default function Sidebar() {
         },
       }}
       enable={{ right: true }}
-      defaultSize={{ width: size as number, height: 'auto' }}
-      size={{ width: size as number, height: 'auto' }}
+      defaultSize={{ width: size, height: 'auto' }}
+      size={{ width: size, height: 'auto' }}
       maxWidth={'50%'}
       grid={[10, 0]}
       onResizeStart={() => setIsResizing(true)}
@@ -54,10 +47,7 @@ export default function Sidebar() {
         status="online"
       />
       <Database />
-      <List
-        items={data ? data : []}
-        currentItem={(router.query.id as string) ?? undefined}
-      />
+      <List items={databases} />
     </Resizable>
   );
 }

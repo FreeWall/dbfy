@@ -1,18 +1,16 @@
-import { SessionProvider } from '@/contexts/session';
+import { AppProvider } from '@/contexts/app';
 import { TrpcRouter } from '@/server/trpc/router';
-import { CustomAppProps } from '@/types/page';
+import { CustomAppProps } from '@/types/app';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import superjson from 'superjson';
 import '../styles/globals.css';
 
-const MyApp = ({ Component, pageProps }: CustomAppProps) => {
+const MyApp = ({ Component, pageProps: { appContextProps, ...pageProps } }: CustomAppProps) => {
   const getLayout = Component.getLayout || ((page) => page);
 
-  return (
-    <SessionProvider session={pageProps.session}>{getLayout(<Component {...pageProps} />, pageProps)}</SessionProvider>
-  );
+  return <AppProvider props={appContextProps}>{getLayout(<Component {...pageProps} />, pageProps)}</AppProvider>;
 };
 
 export default withTRPC<TrpcRouter>({

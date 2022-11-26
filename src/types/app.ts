@@ -6,9 +6,14 @@ export type CustomNextPage<P = unknown> = AppProps<P>['Component'] & {
   getLayout: (page: ReactElement, props: CustomAppProps<P>['pageProps']) => ReactElement;
 };
 
+export type CustomServerSideProps = {
+  session: IronSession;
+  databases: string[];
+};
+
 export type CustomAppProps<P = unknown> = AppProps<P> & {
   pageProps: AppProps<P>['pageProps'] & {
-    session: IronSession;
+    appContextProps?: CustomServerSideProps;
   };
   Component: CustomNextPage;
 };

@@ -1,15 +1,19 @@
 import { TabComponent } from '@/components/ui/tabs';
+import { useDatabases } from '@/contexts/app';
 import { getSessionStore } from '@/server/session/store';
 
 interface DatabasesProps {
   databases: string[];
 }
 
-const Databases: TabComponent = (props: DatabasesProps) => {
+const Databases: TabComponent<DatabasesProps> = (props) => {
+  const databases = useDatabases();
+  console.log(props);
+
   return (
     <div className="mt-5">
       <div>
-        {props.databases.map((database, idx) => (
+        {databases.map((database, idx) => (
           <div key={idx}>{database}</div>
         ))}
       </div>
@@ -25,7 +29,7 @@ Databases.getServerSideProps = async ({ req }) => {
   }
 
   return {
-    databases: await sequelize.getDatabases(),
+    databases: [],
   };
 };
 

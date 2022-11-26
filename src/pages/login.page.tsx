@@ -3,9 +3,9 @@ import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/checkbox';
 import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
-import { withSession } from '@/server/session/common';
+import { withAppContext } from '@/server/app';
 import { rememberExpirationDays } from '@/server/session/options';
-import { CustomNextPage } from '@/types/page';
+import { CustomNextPage } from '@/types/app';
 import { trpc } from '@/utils/trpc';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
@@ -132,16 +132,16 @@ const Login: CustomNextPage = () => {
 };
 
 Login.getLayout = (page) => {
-  return <Layout noSidebar={true}>{page}</Layout>;
+  return <Layout sidebar={false}>{page}</Layout>;
 };
 
 export default Login;
 
-export const getServerSideProps: GetServerSideProps = withSession(({ req, res }) => {
-  if (req.session.crs) {
+export const getServerSideProps: GetServerSideProps = withAppContext(({ req, res }) => {
+  if (req.session) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };
