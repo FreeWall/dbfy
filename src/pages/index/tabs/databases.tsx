@@ -8,7 +8,6 @@ interface DatabasesProps {
 
 const Databases: TabComponent<DatabasesProps> = (props) => {
   const databases = useDatabases();
-  console.log(props);
 
   return (
     <div className="mt-5">

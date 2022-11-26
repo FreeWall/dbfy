@@ -7,7 +7,6 @@ import { withAppContext } from '@/server/app';
 import { rememberExpirationDays } from '@/server/session/options';
 import { CustomNextPage } from '@/types/app';
 import { trpc } from '@/utils/trpc';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { RefObject, useRef } from 'react';
@@ -137,7 +136,7 @@ Login.getLayout = (page) => {
 
 export default Login;
 
-export const getServerSideProps: GetServerSideProps = withAppContext(({ req, res }) => {
+export const getServerSideProps = withAppContext(({ req, res }) => {
   if (req.session) {
     return {
       redirect: {

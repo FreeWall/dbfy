@@ -3,7 +3,7 @@ import { AppProps } from 'next/app';
 import { ReactElement } from 'react';
 
 export type CustomNextPage<P = unknown> = AppProps<P>['Component'] & {
-  getLayout: (page: ReactElement, props: CustomAppProps<P>['pageProps']) => ReactElement;
+  getLayout: (page: ReactElement<P>) => ReactElement;
 };
 
 export type CustomServerSideProps = {

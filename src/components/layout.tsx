@@ -1,19 +1,17 @@
 import { ReactElement } from 'react';
 
 import Main from './layout/main';
-import Sidebar from './layout/sidebar';
+import Sidebar, { SidebarProps } from './layout/sidebar';
 
 interface LayoutProps {
-  sidebar?: boolean;
+  sidebar?: false | SidebarProps['type'];
   children: ReactElement;
 }
 
 export default function Layout(props: LayoutProps) {
-  const sidebar = typeof props.sidebar === 'undefined' ? true : props.sidebar;
-
   return (
     <div className="flex h-full">
-      {sidebar && <Sidebar />}
+      {props.sidebar && <Sidebar type={props.sidebar} />}
       <Main>{props.children}</Main>
     </div>
   );

@@ -37,13 +37,13 @@ export class CustomSequelize extends Sequelize {
 
   async getTables(database: string) {
     const tables = [];
-    const data = await this.query<{ [key: string]: string }>('SHOW TABLES FROM ' + database, {
+    const data = await this.query<{ [key: string]: string }>('SHOW TABLES FROM `' + database + '`', {
       type: QueryTypes.SELECT,
     });
 
     if (data) {
       for (const table of data) {
-        tables.push(table['Tables_in_' + database]);
+        tables.push(table['Tables_in_' + database] as string);
       }
     }
 

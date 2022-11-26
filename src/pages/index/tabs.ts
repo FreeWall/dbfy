@@ -4,7 +4,7 @@ import TableIcon from './../../components/icons/table.svg';
 import Databases from './tabs/databases';
 import Privileges from './tabs/privileges';
 import Sql from './tabs/sql';
-import { HomeProps } from './[...index].page';
+import { HomeProps } from './[...tab].page';
 const MemoTableIcon = memo(TableIcon);
 
 export const tabs: TabsProps<HomeProps>['tabs'] = {

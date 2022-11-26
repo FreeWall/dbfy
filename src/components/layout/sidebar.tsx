@@ -1,20 +1,22 @@
-import { useDatabases, useSession } from '@/contexts/app';
+import { useSession } from '@/contexts/app';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import classNames from 'classnames';
 import { Resizable } from 're-resizable';
 import { useState } from 'react';
 import styles from './sidebar.module.css';
 import Database from './sidebar/database';
+import { Databases } from './sidebar/databases';
 import Header from './sidebar/header';
-import List from './sidebar/list';
 import Server from './sidebar/server';
 
-export default function Sidebar() {
+export interface SidebarProps {
+  type: 'server' | 'database';
+}
+
+export default function Sidebar(props: SidebarProps) {
   const session = useSession();
   const [size, setSize] = useLocalStorage('size', 240);
   const [isResizing, setIsResizing] = useState(false);
-
-  const databases = useDatabases();
 
   return (
     <Resizable
@@ -46,8 +48,8 @@ export default function Sidebar() {
         server={session.credentials.host + ':' + session.credentials.port}
         status="online"
       />
-      <Database />
-      <List items={databases} />
+      {props.type == 'server' && <Databases />}
+      {props.type == 'database' && <Database />}
     </Resizable>
   );
 }

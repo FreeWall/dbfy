@@ -10,7 +10,7 @@ import '../styles/globals.css';
 const MyApp = ({ Component, pageProps: { appContextProps, ...pageProps } }: CustomAppProps) => {
   const getLayout = Component.getLayout || ((page) => page);
 
-  return <AppProvider props={appContextProps}>{getLayout(<Component {...pageProps} />, pageProps)}</AppProvider>;
+  return <AppProvider props={appContextProps}>{getLayout(<Component {...pageProps} />)}</AppProvider>;
 };
 
 export default withTRPC<TrpcRouter>({

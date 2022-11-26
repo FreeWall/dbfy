@@ -2,8 +2,13 @@ import { useRef, useState } from 'react';
 import Item from './list/item';
 import { useNameTooltip } from './list/nameTooltip';
 
-interface ListProps {
-  items: string[];
+export interface ListItem {
+  name: string;
+  link: string;
+}
+
+export interface ListProps {
+  items: ListItem[];
   currentItem?: string;
 }
 
@@ -12,7 +17,7 @@ export default function List(props: ListProps) {
   const [loadingItem, setLoadingItem] = useState<string>();
   const { NameTooltip, onMouseEnter, onMouseLeave } = useNameTooltip(scrollContainerRef.current?.scrollTop);
 
-  function onClickItem(item: string) {
+  function onClickItem(item: ListItem) {
     console.log('onClickItem', item);
   }
 
@@ -24,13 +29,14 @@ export default function List(props: ListProps) {
         className="max-h-full overflow-y-auto break-all pb-8 text-xs font-medium leading-[1.9em]"
         ref={scrollContainerRef}
       >
-        {props.items.map((table) => (
+        {props.items.map((item, idx) => (
           <Item
-            key={table}
-            name={table}
-            isCurrent={props.currentItem == table}
-            isLoading={loadingItem == table}
-            onClickItem={onClickItem}
+            key={idx}
+            name={item.name}
+            link={item.link}
+            isCurrent={props.currentItem == item.name}
+            isLoading={loadingItem == item.name}
+            onClickItem={() => onClickItem(item)}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           />
