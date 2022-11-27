@@ -1,10 +1,10 @@
+import Layout from '@/components/layout';
 import Page from '@/components/layout/main/page';
 import { useSession } from '@/contexts/app';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomNextPage } from '@/types/app';
 import Head from 'next/head';
-import Layout from '../../components/layout';
 import { tabs } from './tabs';
 
 export interface HomeProps {
@@ -47,7 +47,7 @@ Home.getLayout = (page) => {
 export default Home;
 
 export const getServerSideProps = withAppContext<HomeProps>(async (context) => {
-  const currentTab = (context.params?.tab as string) ?? 'databases';
+  const currentTab = (context.params?.tab?.[0] as string) ?? 'databases';
 
   const sequelize = getSessionStore(context.req.session).sequelize;
 

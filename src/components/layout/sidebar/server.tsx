@@ -7,7 +7,7 @@ interface ServerProps {
 
 export default function Server(props: ServerProps) {
   return (
-    <div className="px-[20px]">
+    <div className="px-[20px] pb-[20px]">
       <div className="text-[11px] font-medium">Server</div>
       <div className="flex items-center">
         <div

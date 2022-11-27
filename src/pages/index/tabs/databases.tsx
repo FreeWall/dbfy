@@ -1,6 +1,7 @@
 import { TabComponent } from '@/components/ui/tabs';
 import { useDatabases } from '@/contexts/app';
 import { getSessionStore } from '@/server/session/store';
+import { useEffect, useState } from 'react';
 
 interface DatabasesProps {
   databases: string[];
@@ -9,13 +10,15 @@ interface DatabasesProps {
 const Databases: TabComponent<DatabasesProps> = (props) => {
   const databases = useDatabases();
 
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   return (
     <div className="mt-5">
-      <div>
-        {databases.map((database, idx) => (
-          <div key={idx}>{database}</div>
-        ))}
-      </div>
+      <div>{hydrated && databases.map((database, idx) => <div key={idx}>{database}</div>)}</div>
     </div>
   );
 };

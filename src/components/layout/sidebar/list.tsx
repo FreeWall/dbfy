@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Item from './list/item';
 import { useNameTooltip } from './list/nameTooltip';
 
@@ -21,6 +21,12 @@ export default function List(props: ListProps) {
     console.log('onClickItem', item);
   }
 
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   //TODO: scroll to current table
 
   return (
@@ -29,18 +35,19 @@ export default function List(props: ListProps) {
         className="max-h-full overflow-y-auto break-all pb-8 text-xs font-medium leading-[1.9em]"
         ref={scrollContainerRef}
       >
-        {props.items.map((item, idx) => (
-          <Item
-            key={idx}
-            name={item.name}
-            link={item.link}
-            isCurrent={props.currentItem == item.name}
-            isLoading={loadingItem == item.name}
-            onClickItem={() => onClickItem(item)}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          />
-        ))}
+        {hydrated &&
+          props.items.map((item, idx) => (
+            <Item
+              key={idx}
+              name={item.name}
+              link={item.link}
+              isCurrent={props.currentItem == item.name}
+              isLoading={loadingItem == item.name}
+              onClickItem={() => onClickItem(item)}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+            />
+          ))}
       </div>
 
       <NameTooltip />

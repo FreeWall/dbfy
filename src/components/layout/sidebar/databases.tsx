@@ -12,9 +12,5 @@ export const Databases = () => {
     });
   }
 
-  return (
-    <div className="pt-[20px]">
-      <List items={items} />
-    </div>
-  );
+  return <List items={items} />;
 };

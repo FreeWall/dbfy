@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 
-export default function Index() {
+export default function Page() {
   return <></>;
 }
 

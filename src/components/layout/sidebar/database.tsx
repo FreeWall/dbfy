@@ -1,4 +1,4 @@
-import { DatabaseContext } from '@/pages/database/[id].page';
+import { DatabaseContext } from '@/pages/database/[database]/[...tab].page';
 import { useContext } from 'react';
 import List, { ListItem } from './list';
 
@@ -16,7 +16,7 @@ export default function Database() {
 
   return (
     <>
-      <div className="p-[20px]">
+      <div className="p-[20px] pt-0">
         <select className="w-full">
           <option>realcraft</option>
         </select>

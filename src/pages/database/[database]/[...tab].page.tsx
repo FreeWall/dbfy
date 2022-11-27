@@ -1,9 +1,9 @@
+import Layout from '@/components/layout';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomNextPage } from '@/types/app';
 import Head from 'next/head';
 import { createContext } from 'react';
-import Layout from '../../components/layout';
 
 interface DatabaseContextData {
   tables: string[];
@@ -19,8 +19,6 @@ interface DatabaseProps {
 }
 
 const Database: CustomNextPage<DatabaseProps> = (props) => {
-  console.log(props);
-
   return (
     <>
       <Head>
@@ -49,7 +47,7 @@ Database.getLayout = function getLayout(page) {
 export default Database;
 
 export const getServerSideProps = withAppContext<DatabaseProps>(async (context) => {
-  const database = context.params?.id as string;
+  const database = context.params?.database as string;
 
   const sequelize = getSessionStore(context.req.session).sequelize;
 
