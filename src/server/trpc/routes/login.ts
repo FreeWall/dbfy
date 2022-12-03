@@ -32,7 +32,7 @@ export default router({
       const session = await getSession(ctx.req, ctx.res, {
         cookieOptions: {
           maxAge: input.remember ? rememberExpirationDays * 86400 : undefined,
-          secure: process.env.NODE_ENV === 'production',
+          secure: false, //process.env.NODE_ENV === 'production',
         },
       });
 
