@@ -47,6 +47,9 @@ Home.getLayout = (page) => {
 export default Home;
 
 export const getServerSideProps = withAppContext<HomeProps>(async (context) => {
+  console.log(context.params);
+
+
   const currentTab = (context.params?.tab as string) ?? 'databases';
 
   const sequelize = getSessionStore(context.req.session).sequelize;
