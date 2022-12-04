@@ -16,6 +16,7 @@ function defineNextConfig(config) {
 
 export default function next(stage) {
   return defineNextConfig({
+    distDir: 'build',
     reactStrictMode: true,
     swcMinify: true,
     pageExtensions: ['page.tsx', 'page.ts'],
