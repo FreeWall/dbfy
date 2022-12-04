@@ -8,6 +8,7 @@ export async function initSequelize(credentials: Credentials) {
     username: credentials.user,
     password: credentials.pass,
     dialect: 'mysql',
+    dialectModule: require('mysql2'),
     dialectOptions: {
       connectTimeout: 3000,
     },
