@@ -20,7 +20,7 @@ export default function next(stage) {
     reactStrictMode: true,
     swcMinify: true,
     pageExtensions: ['page.tsx', 'page.ts'],
-    async redirects() {
+    /*async redirects() {
       return [
         {
           source: '/index',
@@ -28,6 +28,6 @@ export default function next(stage) {
           permanent: false,
         },
       ];
-    },
+    },*/
   });
 }

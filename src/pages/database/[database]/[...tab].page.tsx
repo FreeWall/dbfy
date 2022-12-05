@@ -47,6 +47,7 @@ Database.getLayout = function getLayout(page) {
 export default Database;
 
 export const getServerSideProps = withAppContext<DatabaseProps>(async (context) => {
+  console.log(context.params);
   const database = context.params?.database as string;
 
   const sequelize = getSessionStore(context.req.session).sequelize;
