@@ -7,7 +7,7 @@ export default function Page() {
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     redirect: {
-      destination: '/index/databases',
+      destination: '/home/databases',
       permanent: false,
     },
   };

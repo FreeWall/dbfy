@@ -10,21 +10,21 @@ const MemoTableIcon = memo(TableIcon);
 export const tabs: TabsProps<HomeProps>['tabs'] = {
   databases: {
     name: 'Databases',
-    link: '/index/databases',
+    link: '/home/databases',
     icon: MemoTableIcon,
     component: Databases,
     type: 'left',
   },
   privileges: {
     name: 'Privileges',
-    link: '/index/privileges',
+    link: '/home/privileges',
     icon: MemoTableIcon,
     component: Privileges,
     type: 'left',
   },
   sql: {
     name: 'SQL',
-    link: '/index/sql',
+    link: '/home/sql',
     component: Sql,
     type: 'right',
   },
