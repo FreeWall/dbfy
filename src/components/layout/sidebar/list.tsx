@@ -9,6 +9,7 @@ export interface ListItem {
 
 export interface ListProps {
   items: ListItem[];
+  icon: React.ElementType;
   currentItem?: string;
 }
 
@@ -41,6 +42,7 @@ export default function List(props: ListProps) {
               key={idx}
               name={item.name}
               link={item.link}
+              icon={props.icon}
               isCurrent={props.currentItem == item.name}
               isLoading={loadingItem == item.name}
               onClickItem={() => onClickItem(item)}

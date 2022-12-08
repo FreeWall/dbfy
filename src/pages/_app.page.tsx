@@ -4,13 +4,25 @@ import { CustomAppProps } from '@/types/app';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
+import Head from 'next/head';
 import superjson from 'superjson';
 import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps: { appContextProps, ...pageProps } }: CustomAppProps) => {
   const getLayout = Component.getLayout || ((page) => page);
 
-  return <AppProvider props={appContextProps}>{getLayout(<Component {...pageProps} />)}</AppProvider>;
+  return (
+    <AppProvider props={appContextProps}>
+      <Head>
+        <link
+          rel="shortcut icon"
+          href="/favicon.svg"
+          type="image/svg+xml"
+        />
+      </Head>
+      {getLayout(<Component {...pageProps} />)}
+    </AppProvider>
+  );
 };
 
 export default withTRPC<TrpcRouter>({

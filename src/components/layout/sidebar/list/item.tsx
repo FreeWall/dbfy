@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import Link from 'next/link';
-import { memo, MouseEvent } from 'react';
-import TableIcon from './../../../icons/table.svg';
-const MemoTableIcon = memo(TableIcon);
+import { MouseEvent } from 'react';
 
 interface ItemProps {
   name: string;
   link: string;
+  icon: React.ElementType;
   isCurrent: boolean;
   isLoading: boolean;
   onClickItem: () => void;
@@ -26,7 +25,7 @@ export default function Item(props: ItemProps) {
         onMouseLeave={() => props.onMouseLeave()}
       >
         <div className="mr-2 flex h-4 w-4 flex-shrink-0 items-center fill-dbfy-dark-icon">
-          {(props.isLoading && <div className="border-spinner h-4 w-4 border-[3px]" />) || <MemoTableIcon />}
+          {(props.isLoading && <div className="border-spinner h-4 w-4 border-[3px]" />) || <props.icon />}
         </div>
         <div
           className="overflow-hidden overflow-ellipsis"

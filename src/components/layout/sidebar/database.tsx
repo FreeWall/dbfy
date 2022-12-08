@@ -1,6 +1,8 @@
+import TableIcon from '@/components/icons/table.svg';
 import { DatabaseContext } from '@/pages/database/[database]/[tab].page';
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import List, { ListItem } from './list';
+const MemoTableIcon = memo(TableIcon);
 
 export default function Database() {
   const databaseContext = useContext(DatabaseContext);
@@ -21,7 +23,10 @@ export default function Database() {
           <option>realcraft</option>
         </select>
       </div>
-      <List items={items} />
+      <List
+        items={items}
+        icon={MemoTableIcon}
+      />
     </>
   );
 }
