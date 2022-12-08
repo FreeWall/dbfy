@@ -32,7 +32,7 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
       className={classNames(
         'relative flex cursor-pointer items-center border border-l-0 border-dbfy-border bg-dbfy-input px-3 py-2 font-semibold first:border-l',
         {
-          'border-b-0 bg-white': props.current,
+          'border-b-transparent bg-white': props.current,
           'hover:bg-dbfy-input-hover': !props.current,
         },
       )}
@@ -71,7 +71,7 @@ export default function Tabs<T>(props: TabsProps<T>) {
               />
             ))}
           </div>
-          {rightTabs.length && (
+          {!!rightTabs.length && (
             <div className="flex">
               {rightTabs.map(([key, tab]) => (
                 <TabButton

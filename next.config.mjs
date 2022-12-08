@@ -1,5 +1,3 @@
-//import './src/server/env/server.mjs';
-
 /**
  * @template {import('next').NextConfig} T
  * @param {T} config - A generic parameter that flows through to the return type
@@ -20,14 +18,13 @@ export default function next(stage) {
     reactStrictMode: true,
     swcMinify: true,
     pageExtensions: ['page.tsx', 'page.ts'],
-    /*async redirects() {
-      return [
-        {
-          source: '/index',
-          destination: '/',
-          permanent: false,
-        },
-      ];
-    },*/
+    webpack(config) {
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+
+      return config;
+    },
   });
 }

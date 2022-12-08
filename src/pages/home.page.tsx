@@ -5,11 +5,9 @@ export default function Page() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const database = context.params?.database;
-
   return {
     redirect: {
-      destination: '/database/' + database + '/tables',
+      destination: '/home/databases',
       permanent: false,
     },
   };

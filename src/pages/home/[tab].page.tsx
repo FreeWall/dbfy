@@ -11,13 +11,13 @@ export interface HomeProps {
   currentTab: string;
 }
 
-const Home: CustomNextPage<HomeProps> = (props: HomeProps) => {
+const Home: CustomNextPage<HomeProps> = (props) => {
   const session = useSession();
 
   return (
     <>
       <Head>
-        <title>dbfy [...index]</title>
+        <title>{`Server: ${session.credentials.host} | dbfy`}</title>
       </Head>
       <Page
         pageProps={props}
@@ -47,9 +47,6 @@ Home.getLayout = (page) => {
 export default Home;
 
 export const getServerSideProps = withAppContext<HomeProps>(async (context) => {
-  console.log(context.params);
-
-
   const currentTab = (context.params?.tab as string) ?? 'databases';
 
   const sequelize = getSessionStore(context.req.session).sequelize;
