@@ -26,30 +26,28 @@ async function initSession(context: GetServerSidePropsContext) {
 }
 
 export function withAppContext<P extends { [key: string]: any }>(
-  handler: (context: GetServerSidePropsContext) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>,
+  handler?: (
+    context: GetServerSidePropsContext,
+  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P> | void>,
 ) {
   return async (
     context: GetServerSidePropsContext,
   ): Promise<GetServerSidePropsResult<CustomAppProps<P>['pageProps']>> => {
     const session = await initSession(context);
+    const result = await handler?.(context);
+    const store = getSessionStore(session);
 
-    const result = await handler(context);
-
-    if ('props' in result) {
-      const store = getSessionStore(session);
-
-      return {
-        ...result,
-        props: {
-          appContextProps: {
-            session,
-            databases: store.sequelize ? await store.sequelize.getDatabases() : [],
-          },
-          ...(await result.props),
+    return {
+      props: {
+        appContextProps: {
+          session,
+          databases: store.sequelize ? await store.sequelize.getDatabases() : [],
+          tables: context?.params?.database
+            ? await store.sequelize?.getTables(context?.params?.database as string)
+            : [],
         },
-      };
-    }
-
-    return result;
+        ...(result && 'props' in result ? await result.props : undefined),
+      } as CustomAppProps<P>['pageProps'],
+    };
   };
 }

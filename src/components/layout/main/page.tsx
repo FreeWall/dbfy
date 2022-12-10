@@ -1,16 +1,17 @@
 import Tabs, { TabsProps } from '@/components/ui/tabs';
+import { ReactElement } from 'react';
 import Breadcrumbs, { BreadcrumbsProps } from './page/breadcrumbs';
 
-interface PageProps<T> {
-  pageProps: T;
+interface PageProps {
   breadcrumbs: BreadcrumbsProps['breadcrumbs'];
   tabs: {
     currentTab: string;
-    tabs: TabsProps<T>['tabs'];
+    tabs: TabsProps['tabs'];
   };
+  children: ReactElement;
 }
 
-export default function Page<T>(props: PageProps<T>) {
+export default function Page(props: PageProps) {
   return (
     <div className="px-6">
       <div>
@@ -18,13 +19,13 @@ export default function Page<T>(props: PageProps<T>) {
       </div>
       <div className="pt-5">
         <Tabs
-          pageProps={props.pageProps}
           currentTab={props.tabs.currentTab}
           tabs={props.tabs.tabs}
           onTabClick={(tab) => {
             console.log('onTabClick', tab);
           }}
         />
+        {props.children}
       </div>
     </div>
   );

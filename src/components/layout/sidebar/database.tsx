@@ -1,15 +1,14 @@
 import TableIcon from '@/components/icons/table.svg';
-import { DatabaseContext } from '@/pages/database/[database]/[tab].page';
-import { memo, useContext } from 'react';
+import { useTables } from '@/contexts/app';
+import { memo } from 'react';
 import List, { ListItem } from './list';
 const MemoTableIcon = memo(TableIcon);
 
 export default function Database() {
-  const databaseContext = useContext(DatabaseContext);
-
+  const tables = useTables();
   const items: ListItem[] = [];
 
-  for (const table of databaseContext.tables) {
+  for (const table of tables) {
     items.push({
       name: table,
       link: '/table/' + table,

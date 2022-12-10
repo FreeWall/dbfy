@@ -8,6 +8,7 @@ export interface AppContextData {
     credentials: Omit<Credentials, 'pass'>;
   };
   databases: string[];
+  tables: string[];
 }
 
 export const AppContext = createContext<AppContextData>({
@@ -20,6 +21,7 @@ export const AppContext = createContext<AppContextData>({
     },
   },
   databases: [],
+  tables: [],
 });
 
 export function useApp() {
@@ -34,6 +36,10 @@ export function useDatabases() {
   return useContext(AppContext).databases;
 }
 
+export function useTables() {
+  return useContext(AppContext).tables;
+}
+
 export function AppProvider(props: { props?: CustomServerSideProps; children: ReactNode }) {
   const credentials = props.props?.session.crs;
 
@@ -41,7 +47,6 @@ export function AppProvider(props: { props?: CustomServerSideProps; children: Re
     <AppContext.Provider
       value={{
         ...props.props,
-        databases: props.props?.databases ?? [],
         session: {
           authenticated: !!credentials,
           credentials: {
@@ -50,6 +55,8 @@ export function AppProvider(props: { props?: CustomServerSideProps; children: Re
             user: credentials?.user ?? '',
           },
         },
+        databases: props.props?.databases ?? [],
+        tables: props.props?.tables ?? [],
       }}
     >
       {props.children}

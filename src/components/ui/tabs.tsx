@@ -1,22 +1,15 @@
 import classNames from 'classnames';
-import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
-
-export type TabComponent<T = unknown> = React.ElementType<T | undefined> & {
-  getServerSideProps?: (context: GetServerSidePropsContext) => Promise<T | undefined>;
-};
 
 export interface Tab {
   name: string;
   type: 'left' | 'right';
   icon?: React.ElementType;
   link?: string;
-  component?: TabComponent<any>;
 }
 
-export interface TabsProps<T> {
-  pageProps: T;
+export interface TabsProps {
   currentTab: string;
   tabs: { [key: string]: Tab };
   onTabClick: (key: string) => void;
@@ -51,9 +44,7 @@ function TabButton(props: Tab & { key: string; current: boolean; onClick: () => 
   );
 }
 
-export default function Tabs<T>(props: TabsProps<T>) {
-  const CurrentTabComponent = props.tabs[props.currentTab]?.component as React.ElementType;
-
+export default function Tabs(props: TabsProps) {
   const leftTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'left');
   const rightTabs = Object.entries(props.tabs).filter(([, tab]) => tab.type == 'right');
 
@@ -86,7 +77,6 @@ export default function Tabs<T>(props: TabsProps<T>) {
         </div>
         <div className="-mt-[1px] border-b border-b-dbfy-border"></div>
       </div>
-      <div>{CurrentTabComponent && <CurrentTabComponent {...props.pageProps} />}</div>
     </>
   );
 }

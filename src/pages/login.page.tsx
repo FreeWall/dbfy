@@ -5,7 +5,7 @@ import TextInput, { TextInputProps } from '@/components/ui/textInput';
 import { app } from '@/models/sql/constants';
 import { withAppContext } from '@/server/app';
 import { rememberExpirationDays } from '@/server/session/options';
-import { CustomNextPage } from '@/types/app';
+import { CustomPage } from '@/types/app';
 import { trpc } from '@/utils/trpc';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ interface TextField {
   ref: RefObject<HTMLInputElement>;
 }
 
-const Login: CustomNextPage = () => {
+const Login: CustomPage = () => {
   const login = trpc.login.useMutation();
   const router = useRouter();
 
