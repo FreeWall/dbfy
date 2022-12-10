@@ -4,7 +4,7 @@ import Breadcrumbs, { BreadcrumbsProps } from './page/breadcrumbs';
 
 interface PageProps {
   breadcrumbs: BreadcrumbsProps['breadcrumbs'];
-  tabs: {
+  tabs?: {
     currentTab: string;
     tabs: TabsProps['tabs'];
   };
@@ -17,16 +17,18 @@ export default function Page(props: PageProps) {
       <div>
         <Breadcrumbs breadcrumbs={props.breadcrumbs} />
       </div>
-      <div className="pt-5">
-        <Tabs
-          currentTab={props.tabs.currentTab}
-          tabs={props.tabs.tabs}
-          onTabClick={(tab) => {
-            console.log('onTabClick', tab);
-          }}
-        />
-        {props.children}
-      </div>
+      {props.tabs && (
+        <div className="pt-5">
+          <Tabs
+            currentTab={props.tabs.currentTab}
+            tabs={props.tabs.tabs}
+            onTabClick={(tab) => {
+              console.log('onTabClick', tab);
+            }}
+          />
+        </div>
+      )}
+      {props.children}
     </div>
   );
 }

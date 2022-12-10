@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomPage } from '@/types/app';
+import round from 'lodash/round';
 import { useEffect, useState } from 'react';
 import { QueryTypes } from 'sequelize';
 import { HomePage } from './_page';
@@ -29,7 +30,7 @@ const Databases: CustomPage<DatabasesProps> = (props) => {
               props.databases.map((database, idx) => (
                 <tr key={idx}>
                   <td>{database.name}</td>
-                  <td>{Math.round(database.size / 1024 / 1024) + ' MB'}</td>
+                  <td align="right">{round(database.size / 1024 / 1024, 1) + ' MB'}</td>
                 </tr>
               ))}
           </table>

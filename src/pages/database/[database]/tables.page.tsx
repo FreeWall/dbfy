@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomPage } from '@/types/app';
+import round from 'lodash/round';
 import { useEffect, useState } from 'react';
 import { QueryTypes } from 'sequelize';
 import { DatabasePage } from './_page';
@@ -33,7 +34,7 @@ const Tables: CustomPage<TablesProps> = (props) => {
               props.tables.map((table, idx) => (
                 <tr key={idx}>
                   <td>{table.name}</td>
-                  <td>{Math.round(table.size / 1024 / 1024) + ' MB'}</td>
+                  <td align="right">{round(table.size / 1024 / 1024, 1) + ' MB'}</td>
                 </tr>
               ))}
           </table>
