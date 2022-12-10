@@ -10,7 +10,7 @@ const ErrorPageProps: CustomPage<ErrorPageProps> = (props) => {
   return (
     <>
       <Head>
-        <title>404: page not found | dbfy</title>
+        <title>{`${props.code}: ${props.title} | dbfy`}</title>
       </Head>
 
       <div className="container flex h-full flex-col items-center justify-center bg-dbfy-sidebar p-4">
