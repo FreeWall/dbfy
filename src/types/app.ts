@@ -10,7 +10,9 @@ export type CustomPage<P = unknown> = NextPage<P> & {
 export type CustomServerSideProps = {
   session: IronSession;
   databases: string[];
+  database: string | null;
   tables: string[];
+  table: string | null;
 };
 
 export type CustomAppProps<P = unknown> = AppProps<

@@ -5,19 +5,20 @@ import Head from 'next/head';
 import { memo, ReactElement } from 'react';
 const MemoTableIcon = memo(TableIcon);
 
-interface DatabasePageProps {
+interface TablePageProps {
   currentDatabase: string;
+  currentTable: string;
   currentTab: string;
   children: ReactElement;
 }
 
-export const DatabasePage = (props: DatabasePageProps) => {
+export const TablePage = (props: TablePageProps) => {
   const session = useSession();
 
   return (
     <>
       <Head>
-        <title>{`Database: ${props.currentDatabase} | dbfy`}</title>
+        <title>{`Table: ${props.currentTable} | dbfy`}</title>
       </Head>
       <Page
         breadcrumbs={[
@@ -37,19 +38,27 @@ export const DatabasePage = (props: DatabasePageProps) => {
             ),
             link: '/database/' + props.currentDatabase,
           },
+          {
+            name: (
+              <>
+                Table: <b>{props.currentTable}</b>
+              </>
+            ),
+            link: '/database/' + props.currentDatabase + '/table/' + props.currentTable,
+          },
         ]}
         tabs={{
           currentTab: props.currentTab,
           tabs: {
-            tables: {
-              name: 'Tables',
-              link: '/database/' + props.currentDatabase + '/tables',
+            structure: {
+              name: 'Structure',
+              link: '/database/' + props.currentDatabase + '/table/' + props.currentTable + '/structure',
               icon: MemoTableIcon,
               type: 'left',
             },
             sql: {
               name: 'SQL',
-              link: '/database/' + props.currentDatabase + '/sql',
+              link: '/database/' + props.currentDatabase + '/table/' + props.currentTable + '/sql',
               type: 'right',
             },
           },

@@ -14,6 +14,10 @@ body {
   height: 100%;
 }
 
+* {
+  outline: none;
+}
+
 b, strong {
   font-weight: 600;
 }

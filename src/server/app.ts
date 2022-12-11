@@ -42,9 +42,11 @@ export function withAppContext<P extends { [key: string]: any }>(
         appContextProps: {
           session,
           databases: store.sequelize ? await store.sequelize.getDatabases() : [],
+          database: context?.params?.database ?? null,
           tables: context?.params?.database
             ? await store.sequelize?.getTables(context?.params?.database as string)
             : [],
+          table: context?.params?.table ?? null,
         },
         ...(result && 'props' in result ? await result.props : undefined),
       } as CustomAppProps<P>['pageProps'],
