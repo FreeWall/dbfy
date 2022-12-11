@@ -8,6 +8,7 @@ export default function Database() {
   const database = useDatabase();
   const tables = useTables();
   const table = useTable();
+
   const items: ListItem[] = [];
 
   for (const table of tables) {

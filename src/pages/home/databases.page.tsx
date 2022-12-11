@@ -1,8 +1,9 @@
 import Layout from '@/components/layout';
+import Table from '@/components/ui/table';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomPage } from '@/types/app';
-import round from 'lodash/round';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { QueryTypes } from 'sequelize';
 import { HomePage } from './_page';
@@ -21,19 +22,27 @@ const Databases: CustomPage<DatabasesProps> = (props) => {
     setHydrated(true);
   }, []);
 
+  const table = useReactTable({
+    data: props.databases,
+    columns: [
+      {
+        accessorKey: 'name',
+        header: 'Name',
+      },
+      {
+        accessorKey: 'size',
+        header: 'Size',
+      },
+    ],
+    columnResizeMode: 'onChange',
+    getCoreRowModel: getCoreRowModel(),
+  });
+
   return (
     <>
       <HomePage currentTab="databases">
         <div className="mt-5">
-          <table>
-            {hydrated &&
-              props.databases.map((database, idx) => (
-                <tr key={idx}>
-                  <td>{database.name}</td>
-                  <td align="right">{round(database.size / 1024 / 1024, 1) + ' MB'}</td>
-                </tr>
-              ))}
-          </table>
+          <Table table={table} />
         </div>
       </HomePage>
     </>

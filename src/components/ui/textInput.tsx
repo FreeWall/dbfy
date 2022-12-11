@@ -15,7 +15,7 @@ export default forwardRef(function TextInput(props: TextInputProps, ref: Forward
       disabled={props.disabled}
       placeholder={props.placeholder}
       defaultValue={props.value}
-      className="w-full rounded-[3px] border border-dbfy-border py-[6px] px-2 outline-none focus:border focus:border-dbfy-focus focus:shadow-[0_0_0_1px_theme(colors.dbfy-focus)]"
+      className="w-full rounded-[3px] border border-dbfy-border py-[6px] px-2 outline-none ring-dbfy-focus focus:border focus:border-dbfy-focus focus:ring-1"
     />
   );
 });

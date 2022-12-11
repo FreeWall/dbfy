@@ -11,6 +11,7 @@ export interface ListProps {
   items: ListItem[];
   icon: React.ElementType;
   currentItem?: string;
+  loadingItem?: string;
 }
 
 export default function List(props: ListProps) {
@@ -19,7 +20,8 @@ export default function List(props: ListProps) {
   const { NameTooltip, onMouseEnter, onMouseLeave } = useNameTooltip(scrollContainerRef.current?.scrollTop);
 
   function onClickItem(item: ListItem) {
-    console.log('onClickItem', item);
+    setLoadingItem(item.name);
+    //TODO: current item loading
   }
 
   const [hydrated, setHydrated] = useState(false);
@@ -27,6 +29,10 @@ export default function List(props: ListProps) {
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    setLoadingItem(undefined);
+  }, [props.currentItem]);
 
   //TODO: scroll to current table
 
