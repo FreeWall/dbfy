@@ -33,7 +33,7 @@ export default function Table<TData>(props: TableProps<TData>) {
                   {...{
                     onMouseDown: header.getResizeHandler(),
                     onTouchStart: header.getResizeHandler(),
-                    className: `resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`,
+                    className: `resizer ${header.column.getIsResizing() ? 'resizing' : ''}`,
                   }}
                 />
               </th>

@@ -2,8 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './editor.css';
-@import './table.css';
+@import '../components/sql/query/editor.css';
+@import '../components/ui/table.css';
 
 html {
   height: 100%;

@@ -1,0 +1,43 @@
+table {
+  @apply text-xs font-medium;
+}
+
+thead th {
+  @apply bg-dbfy-sidebar border-dbfy-border border font-semibold p-1 px-[5px] border-b-4 relative;
+}
+
+thead th .resizer {
+  position: absolute;
+  top: 0px;
+  right: -6px;
+  width: 10px;
+  height: 100%;
+  cursor: e-resize;
+  user-select: none;
+  z-index: 1;
+}
+
+thead th .resizer:after {
+  content: '';
+  transition: background-color 0.2s ease-out;
+  transition-delay: 0.2s;
+  background-color: transparent;
+}
+
+thead th .resizer:hover:after, thead th .resizer.resizing:after {
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  width: 4px;
+  height: 100%;
+  background-color: #597ce5;
+}
+
+
+tbody tr:nth-child(2n) td {
+  @apply bg-gray-50;
+}
+
+tbody td {
+  @apply border-dbfy-border border p-1 px-[5px];
+}
