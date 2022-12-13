@@ -39,7 +39,7 @@ export default function List(props: ListProps) {
   return (
     <>
       <div
-        className="max-h-full overflow-y-auto break-all pb-8 text-xs font-medium leading-[1.9em]"
+        className="max-h-full overflow-y-auto break-all pb-10 text-xs font-medium leading-[1.9em]"
         ref={scrollContainerRef}
       >
         {hydrated &&

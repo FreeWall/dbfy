@@ -13,7 +13,7 @@ interface PageProps {
 
 export default function Page(props: PageProps) {
   return (
-    <div className="px-6">
+    <div className="px-6 pb-10">
       <div>
         <Breadcrumbs breadcrumbs={props.breadcrumbs} />
       </div>

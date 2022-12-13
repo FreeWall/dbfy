@@ -18,11 +18,8 @@ export default function Breadcrumbs(props: BreadcrumbsProps) {
           key={idx}
           className="mr-[10px] flex items-center"
         >
-          <Link
-            href={breadcrumb.link}
-            className="inline cursor-pointer py-[2px] text-sm hover:text-dbfy-link hover:underline"
-          >
-            <a>{breadcrumb.name}</a>
+          <Link href={breadcrumb.link}>
+            <a className="inline cursor-pointer py-[2px] hover:text-dbfy-link hover:underline">{breadcrumb.name}</a>
           </Link>
           {idx < props.breadcrumbs.length - 1 && (
             <div className="ml-[10px] py-[2px]">
