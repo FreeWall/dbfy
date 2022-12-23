@@ -3,8 +3,8 @@ import Table from '@/components/ui/table';
 import { withAppContext } from '@/server/app';
 import { getSessionStore } from '@/server/session/store';
 import { CustomPage } from '@/types/app';
+import { filesize } from '@/utils/filesize';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import round from 'lodash/round';
 import { useEffect, useState } from 'react';
 import { QueryTypes } from 'sequelize';
 import { HomePage } from './_page';
@@ -33,7 +33,7 @@ const Databases: CustomPage<DatabasesProps> = (props) => {
       {
         accessorKey: 'size',
         header: 'Size',
-        accessorFn: (row) => round(row.size / 1024 / 1024, 1) + ' MB',
+        accessorFn: (row) => filesize(row.size),
       },
     ],
     columnResizeMode: 'onChange',
